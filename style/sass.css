@@ -1,0 +1,359 @@
+@charset "UTF-8";
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0;
+}
+
+/*
+  3. Allow percentage-based heights in the application
+*/
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+/*
+  Typographic tweaks!
+  4. Add accessible line-height
+  5. Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+  6. Improve media defaults
+*/
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/*
+  7. Remove built-in form typography styles
+*/
+input, button, textarea, select {
+  font: inherit;
+}
+
+/*
+  8. Avoid text overflows
+*/
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/*
+  9. Create a root stacking context
+*/
+#root, #__next {
+  isolation: isolate;
+}
+
+h1 {
+  font-size: 3rem;
+  text-align: center;
+}
+
+#spell-manager {
+  box-sizing: border-box;
+  display: grid;
+  grid-template: 50px 70px 30px/repeat(4, 25%);
+  /* 3 filas de 50px de alto y 4 columnas 25% de ancho */
+  align-items: center;
+  justify-items: center;
+  background-color: rgb(79, 45, 0);
+  position: sticky;
+  top: 0px;
+  z-index: 10;
+  padding-bottom: 20px;
+  border-bottom: 5px double black;
+  width: 100%;
+}
+#spell-manager .avatar {
+  margin: 10px;
+  background-color: grey;
+  border: 2px solid black;
+  border-radius: 8px;
+  box-shadow: 3px 3px 3px;
+  grid-column: 1/2;
+  grid-row: 1/3;
+  overflow: hidden;
+}
+#spell-manager .spell-manager-button {
+  width: 90%;
+  height: 90%;
+  background-color: cadetblue;
+  color: black;
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  border: 2px solid black;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px rgb(69, 69, 69);
+}
+#spell-manager .spell-manager-button a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: red;
+  font-weight: 800;
+}
+#spell-manager .only-prepared-spells {
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+#spell-manager .favorite-spells {
+  grid-column: 3/4;
+  grid-row: 1/2;
+}
+#spell-manager #change-view-all-button {
+  grid-column: 4/5;
+  grid-row: 1/2;
+}
+#spell-manager .spells-per-day {
+  grid-column: 2/5;
+  grid-row: 2/3;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template: 1fr 1fr 1fr/repeat(10, 10%);
+}
+#spell-manager .spells-per-day .spell-table {
+  grid-column: 1/11;
+  border: 1px solid black;
+  background-color: rgb(139, 105, 60);
+}
+#spell-manager .spells-per-day div {
+  border: 1px solid black;
+  background-color: rgb(254, 215, 163);
+}
+#spell-manager .regresar {
+  grid-column: 4/5;
+  grid-row: 3/4;
+}
+#spell-manager .search-input-label {
+  grid-column: 1/2;
+  grid-row: 3/4;
+  background-color: rgb(180, 135, 63);
+  border-radius: 8px;
+  width: 70%;
+  text-align: center;
+}
+#spell-manager #search-input {
+  grid-column: 2/4;
+  grid-row: 3/4;
+  border: 2px red solid;
+  height: 90%;
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+#spell-manager #autocomplete-list {
+  grid-column: 2/4;
+  grid-row: 3/4;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  z-index: 20;
+  background-color: rgba(190, 93, 93, 0.445);
+  list-style-type: none;
+  padding: 5px;
+  justify-self: flex-end;
+  align-self: flex-start;
+  border-radius: 10px;
+}
+#spell-manager #next-page-button {
+  position: fixed;
+  right: 5px;
+  bottom: 35%;
+  width: 25px;
+  height: 80px;
+  background-color: red;
+  opacity: 0.5;
+}
+#spell-manager #previous-page-button {
+  position: fixed;
+  left: 5px;
+  bottom: 35%;
+  width: 25px;
+  height: 80px;
+  background-color: red;
+  opacity: 0.5;
+}
+
+#spells-container {
+  flex-basis: auto;
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  padding: 10px;
+  background-color: rgb(187, 116, 35);
+  border-top: 5px black double;
+  overflow: auto;
+}
+#spells-container .spell-card {
+  border: 2px solid black;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  overflow: hidden;
+}
+#spells-container .spell-card .spell-level {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  right: 10px;
+  top: 160px;
+  font-size: 36px;
+  line-height: 50px;
+  font-weight: 600;
+  text-align: center;
+  background-image: url("../images/Nivel.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 5;
+}
+#spells-container .spell-card .spell-title {
+  display: grid;
+  grid-template-columns: 75% 5% 10% 10%;
+  grid-template-rows: 60px 60px;
+  -moz-column-gap: 5px;
+       column-gap: 5px;
+  position: sticky;
+  top: 0px;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding-left: 5px;
+  background-color: white;
+}
+#spells-container .spell-card .spell-title .spell-title-text {
+  text-shadow: white 0px 0px 10px;
+  grid-row: 1/3;
+  overflow: auto;
+  position: relative;
+  /* Agregar posición relativa */
+}
+#spells-container .spell-card .spell-title .spell-title-text h3 {
+  font-size: 26px;
+  font-style: italic;
+  position: sticky;
+  top: 0px;
+  padding-left: 10px;
+  background-color: white;
+  /* Agregar fondo blanco para cubrir el contenido */
+  z-index: 2;
+  /* Asegurar que el nombre esté por encima del contenido */
+}
+#spells-container .spell-card .spell-title .spell-title-text p {
+  font-size: 17px;
+  color: black;
+  font-weight: 500;
+}
+#spells-container .spell-card .spell-title .view-button-spell {
+  width: 45px;
+  height: 45px;
+  border: 2px black solid;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  top: -5px;
+  right: 15%;
+  background-color: grey;
+  z-index: 2;
+}
+#spells-container .spell-card .spell-title .view-button-spell img {
+  width: 100%;
+}
+#spells-container .spell-card .spell-title .prepared-spells {
+  position: absolute;
+  top: 70px;
+  right: 50px;
+}
+#spells-container .spell-card .spell-title .favorite-spells {
+  position: absolute;
+  top: 70px;
+  right: 5px;
+}
+#spells-container .spell-card .spell-title .toggle-button {
+  color: red;
+  width: 40px;
+  height: 40px;
+  border: 2px black solid;
+  border-radius: 50%;
+  align-self: center;
+  cursor: pointer;
+}
+#spells-container .spell-card .spell-title .toggle-button img {
+  width: 100%;
+}
+#spells-container .spell-card .spell-illustration {
+  display: flex;
+  margin-top: 10px;
+  border: 2px solid black;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+#spells-container .spell-card .spell-illustration p {
+  font-size: 20px;
+  color: red;
+}
+#spells-container .spell-card .spell-attributes {
+  font-size: 12px;
+  padding: 10px;
+  padding-left: 25px;
+  height: 120px;
+  overflow-y: auto;
+  /* Agregar overflow-y a auto */
+}
+#spells-container .spell-card .spell-box-description {
+  font-size: 16px;
+  padding: 10px;
+  height: 300px;
+  overflow-y: auto;
+  /* Agregar overflow-y a auto */
+}
+#spells-container .spell-card .spell-extra {
+  flex: 1;
+  min-height: 5%;
+  max-height: 5%;
+  display: none;
+}
+
+.change-view-spell .spell-attributes,
+.change-view-spell .spell-box-description {
+  display: none;
+}
+
+.favorite-spell {
+  background-color: yellow;
+}
+
+.prepared-spell {
+  background-color: rgb(152, 90, 124);
+}
+
+#search-input {
+  position: absolute;
+  width: 100px;
+  left: 0px;
+}/*# sourceMappingURL=sass.css.map */

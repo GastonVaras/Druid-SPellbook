@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/sass.css">
+    <title>Druid Spells</title>
+</head>
+
+<body>
+    <header id="spell-manager">
+        <div class="avatar"><img src="../images/druid-icon.jpeg" alt=""></div>
+        <div class="only-prepared-spells spell-manager-button">Prepared Spells</div>
+        <div class="favorite-spells spell-manager-button">Favourite Spells</div>
+        <button id="change-view-all-button" class="spell-manager-button">Vista</button>
+        <div class="spells-per-day spell-manager-button">
+            <div class="spell-table">Spells per Day</div>
+            <div class="level0">0</div>
+            <div class="level1">1</div>
+            <div class="level2">2</div>
+            <div class="level3">3</div>
+            <div class="level4">4</div>
+            <div class="level5">5</div>
+            <div class="level6">6</div>
+            <div class="level7">7</div>
+            <div class="level8">8</div>
+            <div class="level9">9</div>
+            <div class="quantityLevel0">6</div>
+            <div class="quantityLevel1">4</div>
+            <div class="quantityLevel2">3</div>
+            <div class="quantityLevel3">3</div>
+            <div class="quantityLevel4">2</div>
+            <div class="quantityLevel5">0</div>
+            <div class="quantityLevel6">0</div>
+            <div class="quantityLevel7">0</div>
+            <div class="quantityLevel8">0</div>
+            <div class="quantityLevel9">0</div>
+
+        </div>
+        
+        <div class="regresar spell-manager-button"><a href="../index.html">Regresar</a></div>
+        
+        <label class="search-input-label" for="search-input">Buscar:</label>
+        <input id="search-input" type="text" placeholder="Nombre de hechizo">
+        <ul id="autocomplete-list" class="autocomplete-list"></ul>
+        
+
+    </header>
+
+    <div id="spells-container"></div>
+
+
+
+    <script src="../javascript/spells.js" type="module"></script>
+    <script src="../javascript/script.js" type="module"></script>
+
+</body>
+
+</html>
