@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /*
   1. Use a more-intuitive box-sizing model.
 */
@@ -65,11 +64,39 @@ h1 {
   text-align: center;
 }
 
-#spell-manager {
-  box-sizing: border-box;
+#main-container {
   display: grid;
-  grid-template: 50px 70px 30px/repeat(4, 25%);
-  /* 3 filas de 50px de alto y 4 columnas 25% de ancho */
+  grid-template-rows: 15% 15% 70%;
+  height: 100vh;
+}
+#main-container button {
+  width: 100%;
+  height: 100%;
+  background-color: cadetblue;
+  color: black;
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer;
+  border: 2px solid black;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px rgb(69, 69, 69);
+}
+#main-container button a {
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: black;
+  font-weight: 800;
+}
+#main-container #header,
+#main-container #spell-manager,
+#main-container #book-container {
+  box-sizing: border-box;
+}
+
+#header {
+  display: grid;
+  grid-template: 30% 30% 40%/repeat(5, 20%);
   align-items: center;
   justify-items: center;
   background-color: rgb(79, 45, 0);
@@ -78,282 +105,312 @@ h1 {
   z-index: 10;
   padding-bottom: 20px;
   border-bottom: 5px double black;
-  width: 100%;
 }
-#spell-manager .avatar {
-  margin: 10px;
+#header .avatar {
+  margin: 5px;
   background-color: grey;
   border: 2px solid black;
   border-radius: 8px;
   box-shadow: 3px 3px 3px;
   grid-column: 1/2;
-  grid-row: 1/3;
+  grid-row: 1/4;
   overflow: hidden;
 }
-#spell-manager .spell-manager-button {
-  width: 90%;
-  height: 90%;
-  background-color: cadetblue;
-  color: black;
-  text-align: center;
-  display: inline-block;
-  font-size: 14px;
-  cursor: pointer;
-  border: 2px solid black;
-  border-radius: 5px;
-  box-shadow: 3px 3px 3px rgb(69, 69, 69);
+#header #change-view-all-button {
+  grid-column: 5/6;
+  grid-row: 1/2;
 }
-#spell-manager .spell-manager-button a {
-  display: block;
-  width: 100%;
-  height: 100%;
-  text-decoration: none;
-  color: red;
-  font-weight: 800;
-}
-#spell-manager .only-prepared-spells {
+#header .search-input-label {
   grid-column: 2/3;
-  grid-row: 1/2;
-}
-#spell-manager .favorite-spells {
-  grid-column: 3/4;
-  grid-row: 1/2;
-}
-#spell-manager #change-view-all-button {
-  grid-column: 4/5;
-  grid-row: 1/2;
-}
-#spell-manager .spells-per-day {
-  grid-column: 2/5;
   grid-row: 2/3;
-  width: 100%;
+}
+#header #search-input {
+  grid-column: 2/5;
+  grid-row: 3/4;
   height: 100%;
-  display: grid;
-  grid-template: 1fr 1fr 1fr/repeat(10, 10%);
-}
-#spell-manager .spells-per-day .spell-table {
-  grid-column: 1/11;
-  border: 1px solid black;
-  background-color: rgb(139, 105, 60);
-}
-#spell-manager .spells-per-day div {
-  border: 1px solid black;
-  background-color: rgb(254, 215, 163);
-}
-#spell-manager .regresar {
-  grid-column: 4/5;
-  grid-row: 3/4;
-}
-#spell-manager .search-input-label {
-  grid-column: 1/2;
-  grid-row: 3/4;
-  background-color: rgb(180, 135, 63);
-  border-radius: 8px;
-  width: 70%;
-  text-align: center;
-}
-#spell-manager #search-input {
-  grid-column: 2/4;
-  grid-row: 3/4;
-  border: 2px red solid;
-  height: 90%;
   width: 100%;
   border: 2px solid black;
   border-radius: 5px;
-  box-sizing: border-box;
+  padding-left: 10px;
 }
-#spell-manager #autocomplete-list {
-  grid-column: 2/4;
+#header #autocomplete-list {
+  grid-column: 2/5;
   grid-row: 3/4;
-  position: relative;
   display: flex;
   flex-direction: column;
-  z-index: 20;
-  background-color: rgba(190, 93, 93, 0.445);
+  z-index: 10;
+  background-color: rgba(190, 93, 93, 0.7);
   list-style-type: none;
   padding: 5px;
   justify-self: flex-end;
   align-self: flex-start;
-  border-radius: 10px;
+  border-radius: 5px;
 }
-#spell-manager #next-page-button {
-  position: fixed;
-  right: 5px;
-  bottom: 35%;
-  width: 25px;
-  height: 80px;
-  background-color: red;
-  opacity: 0.5;
-}
-#spell-manager #previous-page-button {
-  position: fixed;
-  left: 5px;
-  bottom: 35%;
-  width: 25px;
-  height: 80px;
-  background-color: red;
-  opacity: 0.5;
+#header #home {
+  grid-column: 5/6;
+  grid-row: 3/4;
 }
 
-#spells-container {
-  flex-basis: auto;
+#spell-manager {
   display: grid;
-  gap: 8px;
-  width: 100%;
-  padding: 10px;
-  background-color: rgb(187, 116, 35);
-  border-top: 5px black double;
-  overflow: auto;
+  grid-template: 25% 75%/repeat(5, 20%);
+  align-items: center;
+  justify-items: center;
+  background-color: rgb(79, 45, 0);
+  z-index: 9;
+  border: 5px double black;
+  position: relative;
+  max-height: 200px;
 }
-#spells-container .spell-card {
-  border: 2px solid black;
+#spell-manager .only-prepared-spells {
+  grid-column: 4/5;
+  grid-row: 1/2;
+}
+#spell-manager .favorite-spells {
+  grid-column: 5/6;
+  grid-row: 1/2;
+}
+#spell-manager #spells-per-day {
+  margin-top: 10px;
+  grid-column: 1/6;
+  grid-row: 2/3;
+  display: grid;
+  grid-template: 40% 30% 30%/repeat(10, 10%);
+  align-items: center;
+  width: 100%;
   height: 100%;
+  text-align: center;
+}
+#spell-manager #spells-per-day .spell-table {
+  grid-column: 1/11;
+  grid-row: 1/2;
+  background-color: rgb(72, 47, 10);
+  border: 2px solid black;
+  color: white;
+  font-size: 20px;
+}
+#spell-manager #spells-per-day .level {
+  background-color: rgb(87, 66, 35);
+  border: 2px solid black;
+  color: white;
+}
+#spell-manager #spells-per-day .quantity {
+  background-color: rgb(130, 101, 57);
+  border: 2px solid black;
+  color: black;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+#book-container {
+  background-color: rgb(84, 55, 11);
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+#book-container #spells-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 5px;
+  padding: 10px;
+  border-top: 5px black double;
+}
+#book-container #spells-container .spell-card {
+  border: 2px solid black;
   display: flex;
   flex-direction: column;
   padding: 5px;
+  background-color: rgb(140, 96, 37);
+}
+
+#spells-container .spell-card .spell-main {
+  display: grid;
+  grid-template-columns: calc(70% - 20px) 5% 5% 5% 5% 5% 5%;
+  gap: 0px;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding-left: 5px;
+  background-color: rgb(171, 152, 100);
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+#spells-container .spell-card .spell-main .spell-main-sticky {
+  position: sticky;
+  top: 0px;
+  background-color: white;
+}
+#spells-container .spell-card .spell-main .spell-name {
+  grid-column: 1/2;
+  grid-row: 1/2;
+}
+#spells-container .spell-card .spell-main .spell-casting-time {
+  grid-column: 1/2;
+  grid-row: 2/3;
+}
+#spells-container .spell-card .spell-main .spell-school {
+  grid-column: 1/2;
+  grid-row: 3/4;
+}
+#spells-container .spell-card .spell-main .main-buttons {
+  width: 30px;
+  height: 30px;
+  border: 2px black solid;
+  border-radius: 50%;
+  cursor: pointer;
   overflow: hidden;
 }
-#spells-container .spell-card .spell-level {
+#spells-container .spell-card .spell-main .main-buttons img {
+  transform: scale(2);
+}
+#spells-container .spell-card .spell-main .view-button-spell {
+  grid-column: 4/5;
+  grid-row: 3/4;
+  background-color: grey;
+  opacity: 0.3;
+}
+#spells-container .spell-card .spell-main .prepared-spells {
+  grid-column: 7/8;
+  transform: translateX(-10px);
+  grid-row: 1/2;
+  background-color: grey;
+}
+#spells-container .spell-card .spell-main .favorite-spells {
+  grid-column: 7/8;
+  transform: translateX(-10px);
+  grid-row: 3/4;
+  background-color: grey;
+}
+#spells-container .spell-card .spell-main .cast-spells {
   position: absolute;
-  width: 60px;
-  height: 60px;
-  right: 10px;
-  top: 160px;
-  font-size: 36px;
-  line-height: 50px;
-  font-weight: 600;
+  bottom: 5px;
+  right: 5px;
+  display: none;
+  width: 50px;
+  height: 50px;
+}
+#spells-container .spell-card .spell-main .spell-level {
+  grid-column: 5/7;
+  grid-row: 1/3;
+  font-size: 24px;
+  font-weight: 800;
   text-align: center;
   background-image: url("../images/Nivel.png");
   background-size: contain;
   background-repeat: no-repeat;
   z-index: 5;
 }
-#spells-container .spell-card .spell-title {
-  display: grid;
-  grid-template-columns: 75% 5% 10% 10%;
-  grid-template-rows: 60px 60px;
-  -moz-column-gap: 5px;
-       column-gap: 5px;
-  position: sticky;
-  top: 0px;
+
+#book-container #spells-container .spell-card.change-view-spell {
+  background-color: red;
+}
+#book-container #spells-container .spell-card.change-view-spell .spell-main .view-button-spell {
+  background-color: white;
+  opacity: 1;
+}
+#book-container #spells-container .spell-card.change-view-spell .spell-main .cast-spells {
+  display: inline-block;
+}
+#book-container #spells-container .spell-card.change-view-spell .spell-main .spell-components {
+  grid-column: 1/2;
+  grid-row: 4/5;
+}
+#book-container #spells-container .spell-card.change-view-spell .spell-main .spell-material-components {
+  grid-column: 1/8;
+  grid-row: 5/6;
+}
+#book-container #spells-container .spell-card.change-view-spell .spell-main .spell-duration {
+  grid-column: 1/8;
+  grid-row: 6/7;
+}
+#book-container #spells-container .spell-card.change-view-spell .spell-main .spell-range {
+  grid-column: 1/8;
+  grid-row: 7/8;
+}
+#book-container #spells-container .spell-card.change-view-spell .spell-main .spell-target {
+  grid-column: 1/8;
+  grid-row: 8/9;
+}
+#book-container #spells-container .spell-card.change-view-spell .spell-main .spell-effect {
+  grid-column: 1/8;
+  grid-row: 9/10;
+}
+#book-container #spells-container .spell-card.change-view-spell .spell-main .spell-area {
+  grid-column: 1/8;
+  grid-row: 10/11;
+}
+#book-container #spells-container .spell-card.change-view-spell .spell-main .spell-saving-throw {
+  grid-column: 1/8;
+  grid-row: 11/12;
+}
+#book-container #spells-container .spell-card.change-view-spell .spell-main .spell-resistance {
+  grid-column: 1/8;
+  grid-row: 12/13;
+}
+#book-container #spells-container .spell-card.change-view-spell .spell-main .spell-XPCost {
+  grid-column: 1/8;
+  grid-row: 13/14;
+}
+#book-container #spells-container .spell-card.change-view-spell .spell-main .spell-focus {
+  grid-column: 1/8;
+  grid-row: 14/15;
+}
+#book-container #spells-container .spell-card.change-view-spell .spell-main .casted-spell {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 300px;
+  height: 200px;
   border: 2px solid black;
   border-radius: 10px;
-  padding-left: 5px;
-  background-color: white;
+  overflow: hidden;
 }
-#spells-container .spell-card .spell-title .spell-title-text {
-  text-shadow: white 0px 0px 10px;
-  grid-row: 1/3;
-  overflow: auto;
-  position: relative;
-  /* Agregar posición relativa */
-}
-#spells-container .spell-card .spell-title .spell-title-text h3 {
-  font-size: 26px;
-  font-style: italic;
-  position: sticky;
-  top: 0px;
-  padding-left: 10px;
-  background-color: white;
-  /* Agregar fondo blanco para cubrir el contenido */
-  z-index: 2;
-  /* Asegurar que el nombre esté por encima del contenido */
-}
-#spells-container .spell-card .spell-title .spell-title-text p {
-  font-size: 17px;
-  color: black;
-  font-weight: 500;
-}
-#spells-container .spell-card .spell-title .view-button-spell {
-  width: 45px;
-  height: 45px;
-  border: 2px black solid;
-  border-radius: 50%;
-  cursor: pointer;
-  position: absolute;
-  top: -5px;
-  right: 15%;
-  background-color: grey;
-  z-index: 2;
-}
-#spells-container .spell-card .spell-title .view-button-spell img {
-  width: 100%;
-}
-#spells-container .spell-card .spell-title .prepared-spells {
-  position: absolute;
-  top: 70px;
-  right: 50px;
-}
-#spells-container .spell-card .spell-title .favorite-spells {
-  position: absolute;
-  top: 70px;
-  right: 5px;
-}
-#spells-container .spell-card .spell-title .toggle-button {
-  color: red;
-  width: 40px;
+#book-container #spells-container .spell-card.change-view-spell .spell-main .casted-spell button {
   height: 40px;
-  border: 2px black solid;
-  border-radius: 50%;
-  align-self: center;
-  cursor: pointer;
+  width: 40px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 15;
 }
-#spells-container .spell-card .spell-title .toggle-button img {
-  width: 100%;
-}
-#spells-container .spell-card .spell-illustration {
-  display: flex;
+#book-container #spells-container .spell-card.change-view-spell .spell-box-description {
   margin-top: 10px;
+  padding: 5px;
   border: 2px solid black;
   border-radius: 10px;
-  justify-content: center;
-  align-items: center;
-  height: 150px;
-  width: 100%;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-#spells-container .spell-card .spell-illustration p {
-  font-size: 20px;
-  color: red;
-}
-#spells-container .spell-card .spell-attributes {
-  font-size: 12px;
-  padding: 10px;
-  padding-left: 25px;
-  height: 120px;
-  overflow-y: auto;
-  /* Agregar overflow-y a auto */
-}
-#spells-container .spell-card .spell-box-description {
-  font-size: 16px;
-  padding: 10px;
-  height: 300px;
-  overflow-y: auto;
-  /* Agregar overflow-y a auto */
-}
-#spells-container .spell-card .spell-extra {
-  flex: 1;
-  min-height: 5%;
-  max-height: 5%;
-  display: none;
+  background-color: rgb(171, 152, 100);
+  text-shadow: 3px 0px 3px white;
 }
 
-.change-view-spell .spell-attributes,
-.change-view-spell .spell-box-description {
-  display: none;
+#book-container #spells-container .spell-card.abjuration {
+  background-color: rgba(0, 60, 255, 0.5);
 }
 
-.favorite-spell {
-  background-color: yellow;
+#book-container #spells-container .spell-card.divination {
+  background-color: rgb(211, 211, 211);
 }
 
-.prepared-spell {
-  background-color: rgb(152, 90, 124);
+#book-container #spells-container .spell-card.conjuration {
+  background-color: rgb(0, 128, 0);
 }
 
-#search-input {
-  position: absolute;
-  width: 100px;
-  left: 0px;
+#book-container #spells-container .spell-card.enchantment {
+  background-color: rgb(255, 255, 0);
+}
+
+#book-container #spells-container .spell-card.evocation {
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
+#book-container #spells-container .spell-card.illusion {
+  background-color: rgb(128, 0, 128);
+}
+
+#book-container #spells-container .spell-card.necromancy {
+  background-color: rgb(54, 43, 55);
+}
+
+#book-container #spells-container .spell-card.transmutation {
+  background-color: rgb(255, 166, 0);
 }/*# sourceMappingURL=sass.css.map */

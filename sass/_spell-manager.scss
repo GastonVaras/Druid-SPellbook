@@ -1,0 +1,57 @@
+#spell-manager {
+    display: grid;
+    grid-template: 25% 75% / repeat(5, 20%); //* 3 filas y 4 columnas
+    align-items: center;
+    justify-items: center;
+    background-color: rgb(79, 45, 0);
+    z-index: 9;
+    border: 5px double black;
+    position: relative;
+    max-height: 200px;
+    
+
+    // PERSONAL para cada boton
+    .only-prepared-spells {
+        grid-column: 4 / 5;
+        grid-row: 1 / 2;
+    }
+
+    .favorite-spells {
+        grid-column: 5 / 6;
+        grid-row: 1 / 2;
+    }
+
+    #spells-per-day {
+        margin-top: 10px;
+        grid-column: 1 / 6;
+        grid-row: 2 / 3;
+        display: grid;
+        grid-template: 40% 30% 30% / repeat(10, 10%);
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        .spell-table {
+            grid-column: 1 / 11;
+            grid-row: 1 / 2;
+            background-color: rgb(72, 47, 10);
+            border: 2px solid black;
+            color: white;
+            font-size: 20px;
+        }
+
+        .level {
+            background-color: rgb(87, 66, 35);
+            border: 2px solid black;
+            color: white;
+        }
+
+        .quantity {
+            background-color: rgb(130, 101, 57);
+            border: 2px solid black;
+            color: black;
+            font-size: 18px;
+            font-weight: 900;
+        }
+    }
+}

@@ -1,9 +1,6 @@
-// Header comun a todas las paginas (la botonera puede variar)
-#spell-manager {
-    box-sizing: border-box;
+#header {
     display: grid;
-    grid-template: 50px 70px 30px / repeat(4, 25%);
-    /* 3 filas de 50px de alto y 4 columnas 25% de ancho */
+    grid-template: 30% 30% 40% / repeat(5, 20%); //* 3 filas y 4 columnas
     align-items: center;
     justify-items: center;
     background-color: rgb(79, 45, 0);
@@ -12,139 +9,54 @@
     z-index: 10;
     padding-bottom: 20px;
     border-bottom: 5px double black;
-    width: 100%;
 
     .avatar {
-        margin: 10px;
+        margin: 5px;
         background-color: grey;
         border: 2px solid black;
         border-radius: 8px;
         box-shadow: 3px 3px 3px;
         grid-column: 1 / 2;
-        grid-row: 1 / 3;
+        grid-row: 1 / 4;
         overflow: hidden;
     }
 
-    // GENERAL para todos los botones del Manager
-    .spell-manager-button {
-        width: 90%;
-        height: 90%;
-        background-color: cadetblue;
-        color: black;
-        text-align: center;
-        display: inline-block;
-        font-size: 14px;
-        cursor: pointer;
-        border: 2px solid black;
-        border-radius: 5px;
-        box-shadow: 3px 3px 3px rgb(69, 69, 69);
-        // overflow: hidden;
-
-        a {
-            display: block;
-            width: 100%;
-            height: 100%;
-            text-decoration: none;
-            color: red;
-            font-weight: 800;
-        }
-    }
-
-    // PERSONAL para cada boton
-    .only-prepared-spells {
-        grid-column: 2 / 3;
-        grid-row: 1 / 2;
-    }
-
-    .favorite-spells {
-        grid-column: 3 / 4;
-        grid-row: 1 / 2;
-    }
-
     #change-view-all-button {
-        grid-column: 4 / 5;
+        grid-column: 5 / 6;
         grid-row: 1 / 2;
     }
-
-    .spells-per-day {
-        grid-column: 2 / 5;
-        grid-row: 2 / 3;
-        width: 100%;
-        height: 100%;
-        display: grid;
-        grid-template: 1fr 1fr 1fr / repeat(10, 10%);
-        
-        .spell-table {
-            grid-column: 1 / 11;
-            border: 1px solid black;
-            background-color: rgb(139, 105, 60);
-        }
-        div {
-            border: 1px solid black;
-            background-color: rgb(254, 215, 163);
-        }
-    }
-
- 
-    .regresar {
-        grid-column: 4 / 5;
-        grid-row: 3 / 4;
-    }
-
- 
 
     .search-input-label {
-        grid-column: 1 / 2;
-        grid-row: 3 / 4;
-        background-color: rgb(180, 135, 63);
-        border-radius: 8px;
-        width: 70%;
-        text-align: center;
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
     }
 
     #search-input {
-        grid-column: 2 / 4;
+        grid-column: 2 / 5;
         grid-row: 3 / 4;
-        border: 2px red solid;
-        height: 90%;
+        height: 100%;
         width: 100%;
         border: 2px solid black;
         border-radius: 5px;
-        box-sizing: border-box;
+        padding-left: 10px;
     }
 
     #autocomplete-list {
-        grid-column: 2 / 4;
+        grid-column: 2 / 5;
         grid-row: 3 / 4;
-        position: relative;
         display: flex;
         flex-direction: column;
-        z-index: 20;
-        background-color: rgba(190, 93, 93, 0.445);
+        z-index: 10;
+        background-color: rgba(190, 93, 93, 0.7);
         list-style-type: none;
         padding: 5px;
         justify-self: flex-end;
         align-self: flex-start;
-        border-radius: 10px;
+        border-radius: 5px;
     }
 
-    #next-page-button {
-        position: fixed;
-        right: 5px;
-        bottom: 35%;
-        width: 25px;
-        height: 80px;
-        background-color: red;
-        opacity: 0.5;
-    }
-
-    #previous-page-button {
-        position: fixed;
-        left: 5px;
-        bottom: 35%;
-        width: 25px;
-        height: 80px;
-        background-color: red;
-        opacity: 0.5;
+    #home {
+        grid-column: 5 / 6;
+        grid-row: 3 / 4;
     }
 }

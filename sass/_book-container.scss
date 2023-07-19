@@ -1,0 +1,26 @@
+#book-container {
+    background-color: rgb(84, 55, 11);
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+
+    // Es el padre de todos los hechizos
+    #spells-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 5px;
+        padding: 10px;
+        border-top: 5px black double;
+        .spell-card {
+            border: 2px solid black;
+            display: flex;
+            flex-direction: column;
+            padding: 5px;
+            // Este background-color se debe cambiar segun spell.school
+            background-color: rgb(140, 96, 37);
+            // Se asigna compact-view por default
+            // Se asigna escuela de magia
+        }
+    }
+}

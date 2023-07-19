@@ -1,0 +1,63 @@
+#main-container {
+    display: grid;
+    grid-template-rows: 15% 15% 70%;
+    height: 100vh;
+
+    // GENERAL para todos los botones del header
+    button {
+        width: 100%;
+        height: 100%;
+        background-color: cadetblue;
+        color: black;
+        text-align: center;
+        font-size: 18px;
+        cursor: pointer;
+        border: 2px solid black;
+        border-radius: 5px;
+        box-shadow: 3px 3px 3px rgb(69, 69, 69);
+
+        a {
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            color: black;
+            font-weight: 800;
+        }
+    }
+
+    #header,
+    #spell-manager,
+    #book-container {
+        box-sizing: border-box;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+// #next-page-button {
+//     position: fixed;
+//     right: 5px;
+//     bottom: 35%;
+//     width: 25px;
+//     height: 80px;
+//     background-color: red;
+//     opacity: 0.5;
+// }
+
+// #previous-page-button {
+//     position: fixed;
+//     left: 5px;
+//     bottom: 35%;
+//     width: 25px;
+//     height: 80px;
+//     background-color: red;
+//     opacity: 0.5;
+// }

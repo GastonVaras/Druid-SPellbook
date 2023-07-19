@@ -3,7 +3,7 @@ const spells = [
         name: "Create Water",
         school: "Conjuration",
         level: "0",
-        image: "../images/water-template.png",
+        image: "../images/create-water.png",
         imageDescription:"Create up to 2 gallons of water/level.~   1 gallon weighs about 8 pounds.~    One cubic foot contains roughly 8 gallons and weighs about 60 pounds.",
         components: "V, S",
         materialComponents: "",
