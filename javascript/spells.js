@@ -1,10 +1,9 @@
-const spells = [
-    {
+const spells = [{
         name: "Create Water",
         school: "Conjuration",
         level: "0",
-        image: "../images/create-water.png",
-        imageDescription:"Create up to 2 gallons of water/level.~   1 gallon weighs about 8 pounds.~    One cubic foot contains roughly 8 gallons and weighs about 60 pounds.",
+        image: "../images/water-template.png",
+        imageDescription: "Create up to 2 gallons of water/level.~   1 gallon weighs about 8 pounds.~    One cubic foot contains roughly 8 gallons and weighs about 60 pounds.",
         components: "V, S",
         materialComponents: "",
         castingTime: "1 action",
@@ -24,8 +23,8 @@ const spells = [
         name: "Cure Minor Wounds",
         school: "Conjuration",
         level: "0",
-        image: "../images/cure-minor-wounds.png",
-        imageDescription:"",
+        image: "../images/healing-template.png",
+        imageDescription: "Cures 1 points of damage +1 point per caster level (maximum +5).~",
         components: "V, S",
         materialComponents: "",
         castingTime: "1 action",
@@ -45,8 +44,8 @@ const spells = [
         name: "Detect Magic",
         school: "Divination",
         level: "0",
-        image: "../images/detect-magic.png",
-        imageDescription:"UN GALON DE AGUA",
+        image: "../images/detect-template.png",
+        imageDescription: "1st Round: Presence or absence of magical auras.~    2nd Round: Number of different magical auras and the power of the most potent aura.~    3rd Round: The strength and location of each aura.",
         components: "V, S",
         materialComponents: "",
         castingTime: "1 action",
@@ -59,15 +58,72 @@ const spells = [
         spellResistance: "No",
         XPCost: "",
         focus: "",
-        description: "The character detect magical auras. The amount of information revealed depends on how long the character studies a particular area or subject:~1st Round: Presence or absence of magical auras.~2nd Round: Number of different magical auras and the strength of the strongest aura.~3rd Round: The strength and location of each aura. If the items or creatures bearing the auras are in line of sight, the character can make Spellcraft skill checks to determine the school of magic involved in each. (Make one check per aura; DC 15 + spell level, or 15 + half caster level for a nonspell effect.)~Magical areas, multiple types of magic, or strong local magical emanations may confuse or conceal weaker auras.~        Aura Strength: An aura’s magical power and strength depend on a spell’s functioning spell level or an item’s caster level.~      If an aura falls into more than one category, detect magic indicates the stronger of the two.~        Length Aura Lingers: How long the aura lingers depends on its original strength.~     Note: Each round, the character can turn to detect things in a new area. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it. Outsiders and elementals are not magical in themselves, but if they are conjured, the conjuration spell registers.",
+        description: `The character detect magical auras. The amount of information revealed depends on how long the character studies a particular area or subject:~    
+        1st round: Presence or absence of magical auras.~
+        2nd round: Number of different magical auras and the strength of the strongest aura.~
+        3rd round: The strength and location of each aura. If the items or creatures bearing the auras are in line of sight, the character can make Spellcraft skill checks to determine the school of magic involved in each. (Make one check per aura; DC 15 + spell level, or 15 + half caster level for a nonspell effect.)~
+        Magical areas, multiple types of magic, or strong local magical emanations may confuse or conceal weaker auras.
+        Aura Strength: An aura’s magical power and strength depend on a spell’s functioning spell level or an item’s caster level.
+        If an aura falls into more than one category, detect magic indicates the stronger of the two.~
+        <table>
+            <tr>
+                <th align="left" rowspan="2">Spell or Object</th>
+                <th colspan="4">Aura Power</th>
+            </tr>
+            <tr>
+                <th>Faint</th>
+                <th>Moderate</th>
+                <th>Strong</th>
+                <th>Overwhelming</th>
+            </tr>
+            <tr>
+                <td>Functioning spell (spell level)</td>
+                <td align="center">3rd or lower</td>
+                <td align="center">4th-6th</td>
+                <td align="center">7th-9th</td>
+                <td align="center">10th+ (deity-level)</td>
+            </tr>
+            <tr>
+                <td>Magic item (caster level)</td>
+                <td align="center">5th or lower</td>
+                <td align="center">6th-11th</td>
+                <td align="center">12th-20th</td>
+                <td align="center">21st+ (artifact)</td>
+            </tr>
+        </table>
+        Lingering Aura: A magical aura lingers after its original source dissipates (in the case of a spell) or is destroyed (in the case of a magic item). If detect magic is cast and directed at such a location, the spell indicates an aura strength of dim (even weaker than a faint aura). How long the aura lingers at this dim level depends on its original power:~
+        <table>
+            <tr>
+		        <th align="left">Original Strength</th>
+		        <th align="left">Duration of Lingering Aura</th>
+	        </tr>
+            <tr>
+                <td>Faint</td>
+                <td>1d6 rounds</td>
+            </tr>
+            <tr>
+                <td>Moderate</td>
+                <td>1d6 minutes</td>
+            </tr>
+            <tr>
+                <td>Strong</td>
+                <td>1d6×10 minutes</td>
+            </tr>
+            <tr>
+                <td>Overwhelming</td>
+                <td>1d6 days</td>
+            </tr>
+        </table>
+        Note: Each round, the character can turn to detect things in a new area. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it. Outsiders and elementals are not magical in themselves, but if they are conjured, the conjuration spell registers.~
+        Detect magic can be made permanent with a permanency spell.`,
         prepared: false,
     },
     {
         name: "Detect Poison",
         school: "Divination",
         level: "0",
-        image: "../images/detect-poison.png",
-        imageDescription:"UN GALON DE AGUA",
+        image: "../images/detect-template.png",
+        imageDescription: "Determine whether a creature, object, or area has been poisoned or is poisonous.~ Determine the exact type of poison with a successful Wisdom check (DC20)",
         components: "V, S",
         materialComponents: "",
         castingTime: "1 action",
@@ -84,11 +140,11 @@ const spells = [
         prepared: false,
     },
     {
-        name: "Flare (Light)",
+        name: "Flare",
         school: "Evocation",
         level: "0",
-        image: "../images/detect-poison.png",
-        imageDescription:"UN GALON DE AGUA",
+        image: "../images/dazzled-template.png",
+        imageDescription: "A dazzled creature suffers a –1 penalty on attack rolls.~ The creature recovers in 1 minute.~ Sightless creatures are not affected by flare.",
         components: "V",
         materialComponents: "",
         castingTime: "1 action",
@@ -108,8 +164,8 @@ const spells = [
         name: "Guidance",
         school: "Divination",
         level: "0",
-        image: "../images/guidance.png",
-        imageDescription:"UN GALON DE AGUA",
+        image: "../images/buff-template.png",
+        imageDescription: "The creature gets a +1 competence bonus on a single attack roll, saving throw, or skill check.",
         components: "V, S",
         materialComponents: "",
         castingTime: "1 action",
@@ -130,7 +186,7 @@ const spells = [
         school: "Divination",
         level: "0",
         image: "../images/know-direction.png",
-        imageDescription:"UN GALON DE AGUA",
+        imageDescription: "Instantly know the direction of north.",
         components: "V, S",
         materialComponents: "",
         castingTime: "1 action",
@@ -147,11 +203,11 @@ const spells = [
         prepared: false,
     },
     {
-        name: "Light (Light)",
+        name: "Light",
         school: "Evocation",
         level: "0",
-        image: "../images/light.png",
-        imageDescription:"UN GALON DE AGUA",
+        image: "../images/light-template.png",
+        imageDescription: "20-foot radius of light and shadowy illumination out to a 40 ft. radius.",
         components: "V, M/DF",
         materialComponents: "A firefly or a piece of phosphorescent moss.  ",
         castingTime: "1 action",
@@ -171,8 +227,8 @@ const spells = [
         name: "Mending",
         school: "Transmutation",
         level: "0",
-        image: "../images/light.png",
-        imageDescription:"",
+        image: "../images/mending.png",
+        imageDescription: "Repairs small breaks or tears in objects of up to 1 lb.",
         components: "V, S",
         materialComponents: "",
         castingTime: "1 action",
@@ -192,8 +248,8 @@ const spells = [
         name: "Purify Food and Drink",
         school: "Transmutation",
         level: "0",
-        image: "../images/light.png",
-        imageDescription:"",
+        image: "../images/purify-template.png",
+        imageDescription: "Makes otherwise contaminated food and water pure and suitable for consumption.",
         components: "V, S",
         materialComponents: "",
         castingTime: "1 action",
@@ -213,8 +269,8 @@ const spells = [
         name: "Read Magic",
         school: "Divination",
         level: "0",
-        image: "../images/light.png",
-        imageDescription:"",
+        image: "../images/read-magic.png",
+        imageDescription: "You can decipher magical inscriptions on objects—books, scrolls, weapons, and the like—that would otherwise be unintelligible.",
         components: "V, S, F",
         materialComponents: "",
         castingTime: "1 action",
@@ -234,8 +290,8 @@ const spells = [
         name: "Resistance",
         school: "Abjuration",
         level: "0",
-        image: "../images/light.png",
-        imageDescription:"",
+        image: "../images/buff-template.png",
+        imageDescription: "+1 resistance bonus on saves",
         components: "V, S, M, DF",
         materialComponents: "A miniature cloak.",
         castingTime: "1 action",
@@ -255,8 +311,8 @@ const spells = [
         name: "Virtue",
         school: "Transmutation",
         level: "0",
-        image: "../images/light.png",
-        imageDescription:"",
+        image: "../images/temporary-template.png",
+        imageDescription: "1 temporary hit point",
         components: "V, S, DF",
         materialComponents: "",
         castingTime: "1 standard action",

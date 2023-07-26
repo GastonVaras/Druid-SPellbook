@@ -3,7 +3,7 @@
     overflow: auto;
     display: flex;
     flex-direction: column;
-
+    position: relative;
     // Es el padre de todos los hechizos
     #spells-container {
         display: flex;
@@ -17,10 +17,42 @@
             display: flex;
             flex-direction: column;
             padding: 5px;
-            // Este background-color se debe cambiar segun spell.school
-            background-color: rgb(140, 96, 37);
-            // Se asigna compact-view por default
-            // Se asigna escuela de magia
+            background-color: rgb(140, 96, 37); // Default, se cambia segun escuela de magia
+            position: relative;
+            .casted-spell {
+                position: absolute;
+                top: 20%;
+                left: 50%; /* Centrar horizontalmente */
+                transform: translateX(-50%); /* Centrar horizontalmente */
+                width: 300px;
+                height: 250px;
+                border: 2px solid black;
+                border-radius: 10px;
+                overflow: hidden;
+                button {
+                    height: 25px;
+                    width: 25px;
+                    position: absolute;
+                    top: 0px;
+                    right: 0px;
+                    z-index: 15;
+                    font-size: 10px;
+                }
+            }
         }
+    }
+   
+    #previous-page-button {
+        position: absolute;   
+        top: 40%;
+        width: 20px;
+        height: 60px;
+    }
+    #next-page-button {
+        position: absolute;   
+        top: 40%;
+        right: 0px;
+        width: 20px;
+        height: 60px;
     }
 }

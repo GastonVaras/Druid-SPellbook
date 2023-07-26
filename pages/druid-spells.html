@@ -15,7 +15,7 @@
     <div id="main-container">
         <header id="header">
             <div class="avatar"><img src="../images/druid-icon.jpeg" alt=""></div>
-            <button id="change-view-all-button" class="spell-manager-button">Vista</button>
+            
             <label class="search-input-label" for="search-input"></label>
             <input id="search-input" type="text" placeholder="Buscar hechizo">
             <ul id="autocomplete-list" class="autocomplete-list"></ul>
@@ -23,8 +23,9 @@
         </header>
 
         <div id="spell-manager">
+            <button class="show-all-spells spell-manager-button">All</button>
             <button class="only-prepared-spells spell-manager-button">Prepared</button>
-            <button class="favorite-spells spell-manager-button">Favorite</button>
+            <button class="only-favourite-spells spell-manager-button">Favorite</button>
             <div id="spells-per-day">
                 <div class="spell-table">Spells per Day</div>
                 <div class="level">0</div>
