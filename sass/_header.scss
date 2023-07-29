@@ -1,13 +1,10 @@
 #header {
     display: grid;
     grid-template: 30% 30% 40% / repeat(5, 20%); //* 3 filas y 4 columnas
-    align-items: center;
-    justify-items: center;
     background-color: rgb(79, 45, 0);
     position: sticky;
     top: 0px;
     z-index: 10;
-    padding-bottom: 20px;
     border-bottom: 5px double black;
 
     .avatar {
@@ -15,7 +12,7 @@
         background-color: grey;
         border: 2px solid black;
         border-radius: 8px;
-        box-shadow: 3px 3px 3px;
+        box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
         grid-column: 1 / 2;
         grid-row: 1 / 4;
         overflow: hidden;
@@ -28,22 +25,24 @@
 
     .search-input-label {
         grid-column: 2 / 3;
-        grid-row: 2 / 3;
+        grid-row: 1 / 2;
     }
 
     #search-input {
-        grid-column: 2 / 5;
-        grid-row: 3 / 4;
-        height: 100%;
-        width: 100%;
+        grid-column: 2 / 6;
+        grid-row: 2 / 3;
+        height: 50px;
         border: 2px solid black;
         border-radius: 5px;
         padding-left: 10px;
+        margin-right: 10px;
+        box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
     }
 
     #autocomplete-list {
-        grid-column: 2 / 5;
-        grid-row: 3 / 4;
+        grid-column: 2 / 6;
+        grid-row: 2 / 3;
+        margin-right: 10px;
         display: flex;
         flex-direction: column;
         z-index: 10;
@@ -53,10 +52,5 @@
         justify-self: flex-end;
         align-self: flex-start;
         border-radius: 5px;
-    }
-
-    #home {
-        grid-column: 5 / 6;
-        grid-row: 3 / 4;
     }
 }

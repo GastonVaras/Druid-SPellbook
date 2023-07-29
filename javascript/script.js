@@ -58,6 +58,7 @@ function createFavoriteButton(spell) {
 // ----> Variables Globales <----- \\
 const bookContainer = document.getElementById('book-container')
 const spellsContainer = document.getElementById('spells-container');
+const mainContainer = document.getElementById('main-container');
 const resolutions = [{
     width: 425,
     spellsPerPage: 5
@@ -109,7 +110,9 @@ function updateFilteredSpells() {
 }
 
 // Llamamos a la función para actualizar los arrays de hechizos preparados y favoritos inicialmente
+renderSpells(spells);
 showAllSpellsHandler();
+
 
 function renderSpells(spellsToRender) {
   // Eliminamos los hechizos actuales antes de agregar los nuevos hechizos a mostrar
@@ -202,11 +205,11 @@ window.addEventListener("resize", () => {
 // Crea los botones de cambio de pagina dentro de bookContainer
 const previousPageButton = document.createElement("button");
 previousPageButton.id = "previous-page-button";
-bookContainer.appendChild(previousPageButton);
+mainContainer.appendChild(previousPageButton);
 
 const nextPageButton = document.createElement("button");
 nextPageButton.id = "next-page-button";
-bookContainer.appendChild(nextPageButton);
+mainContainer.appendChild(nextPageButton);
 
 previousPageButton.addEventListener("click", () => {
   goToPreviousPage();
@@ -230,6 +233,9 @@ function showPreparedSpellsHandler() {
 
 const onlyPreparedButton = document.querySelector(".only-prepared-spells");
 onlyPreparedButton.addEventListener("click", () => {
+  onlyPreparedButton.classList.add("active");
+  onlyFavouriteButton.classList.remove("active"); // Quita la clase "active" de onlyFavouriteButton
+  showAllButton.classList.remove("active");
   showPreparedSpellsHandler();
 });
 
@@ -246,6 +252,9 @@ function showFavoriteSpellsHandler() {
 
 const onlyFavouriteButton = document.querySelector(".only-favourite-spells");
 onlyFavouriteButton.addEventListener("click", () => {
+  onlyFavouriteButton.classList.add("active");
+  onlyPreparedButton.classList.remove("active"); // Quita la clase "active" de onlyFavouriteButton
+  showAllButton.classList.remove("active");
   showFavoriteSpellsHandler();
 });
 
@@ -264,7 +273,12 @@ function showAllSpellsHandler() {
 }
 
 const showAllButton = document.querySelector(".show-all-spells");
-showAllButton.addEventListener("click", showAllSpellsHandler);
+showAllButton.addEventListener("click", () => {
+  showAllSpellsHandler();
+  showAllButton.classList.add("active");
+  onlyPreparedButton.classList.remove("active");
+  onlyFavouriteButton.classList.remove("active");
+});
 
 // -----> Crear Hechizo <------ \\
 // ---------------------------- \\

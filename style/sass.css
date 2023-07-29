@@ -67,8 +67,9 @@ h1 {
 
 #main-container {
   display: grid;
-  grid-template-rows: 15% 15% 70%;
+  grid-template-rows: 90px 15% 70%;
   height: 100vh;
+  position: relative;
 }
 #main-container button {
   width: 100%;
@@ -80,7 +81,7 @@ h1 {
   cursor: pointer;
   border: 2px solid black;
   border-radius: 5px;
-  box-shadow: 3px 3px 3px rgb(69, 69, 69);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 }
 #main-container button a {
   width: 100%;
@@ -94,17 +95,44 @@ h1 {
 #main-container #book-container {
   box-sizing: border-box;
 }
+#main-container #previous-page-button {
+  position: absolute;
+  top: 52%;
+  width: 50px;
+  height: 25px;
+  background-image: url(../images/up-arrow.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  transform: rotate(-90deg);
+  background-color: rgb(84, 55, 11);
+  box-shadow: -3px -3px 3px rgb(0, 0, 0);
+  opacity: 0.65;
+}
+#main-container #next-page-button {
+  position: absolute;
+  top: 52%;
+  right: 0px;
+  width: 50px;
+  height: 25px;
+  background-image: url(../images/up-arrow.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  transform: rotate(90deg);
+  background-color: rgb(84, 55, 11);
+  z-index: 20;
+  box-shadow: 3px -3px 3px rgb(0, 0, 0);
+  opacity: 0.65;
+}
 
 #header {
   display: grid;
   grid-template: 30% 30% 40%/repeat(5, 20%);
-  align-items: center;
-  justify-items: center;
   background-color: rgb(79, 45, 0);
   position: sticky;
   top: 0px;
   z-index: 10;
-  padding-bottom: 20px;
   border-bottom: 5px double black;
 }
 #header .avatar {
@@ -112,7 +140,7 @@ h1 {
   background-color: grey;
   border: 2px solid black;
   border-radius: 8px;
-  box-shadow: 3px 3px 3px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
   grid-column: 1/2;
   grid-row: 1/4;
   overflow: hidden;
@@ -123,20 +151,22 @@ h1 {
 }
 #header .search-input-label {
   grid-column: 2/3;
-  grid-row: 2/3;
+  grid-row: 1/2;
 }
 #header #search-input {
-  grid-column: 2/5;
-  grid-row: 3/4;
-  height: 100%;
-  width: 100%;
+  grid-column: 2/6;
+  grid-row: 2/3;
+  height: 50px;
   border: 2px solid black;
   border-radius: 5px;
   padding-left: 10px;
+  margin-right: 10px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 }
 #header #autocomplete-list {
-  grid-column: 2/5;
-  grid-row: 3/4;
+  grid-column: 2/6;
+  grid-row: 2/3;
+  margin-right: 10px;
   display: flex;
   flex-direction: column;
   z-index: 10;
@@ -146,10 +176,6 @@ h1 {
   justify-self: flex-end;
   align-self: flex-start;
   border-radius: 5px;
-}
-#header #home {
-  grid-column: 5/6;
-  grid-row: 3/4;
 }
 
 #spell-manager {
@@ -161,15 +187,35 @@ h1 {
   z-index: 9;
   border: 5px double black;
   position: relative;
-  max-height: 200px;
+  max-height: 180px;
+  box-sizing: border-box;
+}
+#spell-manager .spell-manager-button {
+  font-size: 12px;
+  font-weight: bolder;
+  background-color: rgb(130, 101, 57);
+  color: aliceblue;
+}
+#spell-manager .show-all-spells {
+  grid-column: 1/2;
+  grid-row: 1/2;
+}
+#spell-manager .show-all-spells.active {
+  background-color: rgb(184, 126, 50);
 }
 #spell-manager .only-prepared-spells {
   grid-column: 4/5;
   grid-row: 1/2;
 }
+#spell-manager .only-prepared-spells.active {
+  background-color: rgb(184, 126, 50);
+}
 #spell-manager .only-favourite-spells {
   grid-column: 5/6;
   grid-row: 1/2;
+}
+#spell-manager .only-favourite-spells.active {
+  background-color: rgb(184, 126, 50);
 }
 #spell-manager #spells-per-day {
   margin-top: 10px;
@@ -194,13 +240,14 @@ h1 {
   background-color: rgb(87, 66, 35);
   border: 2px solid black;
   color: white;
+  font-weight: bold;
 }
 #spell-manager #spells-per-day .quantity {
   background-color: rgb(130, 101, 57);
   border: 2px solid black;
-  color: black;
-  font-size: 18px;
-  font-weight: 900;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 16px;
+  font-weight: 700;
 }
 
 #book-container {
@@ -209,13 +256,15 @@ h1 {
   display: flex;
   flex-direction: column;
   position: relative;
+  width: 100%;
+  height: 100%;
 }
 #book-container #spells-container {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 5px;
-  padding: 10px;
+  gap: 1px;
+  padding: 5px 10px;
   border-top: 5px black double;
 }
 #book-container #spells-container .spell-card {
@@ -245,19 +294,6 @@ h1 {
   right: 0px;
   z-index: 15;
   font-size: 10px;
-}
-#book-container #previous-page-button {
-  position: absolute;
-  top: 40%;
-  width: 20px;
-  height: 60px;
-}
-#book-container #next-page-button {
-  position: absolute;
-  top: 40%;
-  right: 0px;
-  width: 20px;
-  height: 60px;
 }
 
 #spells-container .spell-card .spell-main {
@@ -414,7 +450,6 @@ h1 {
   border: 2px solid black;
   border-radius: 10px;
   background-color: rgb(171, 152, 100);
-  text-shadow: 3px 0px 3px white;
   overflow: auto;
 }
 #book-container #spells-container .spell-card.change-view-spell .spell-box-description table {
