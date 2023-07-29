@@ -544,17 +544,6 @@ function handleSearchInput() {
   currentSpellIndex = 0;
   // Actualiza la lista de autocompletado
   updateAutocompleteList(matchingSpells);
-
-  // Borra el campo de búsqueda si no hay coincidencias en la lista
-  if (matchingSpells.length === 0) {
-    clearSearchInput();
-  }
-}
-
-// Función para limpiar el campo de búsqueda y restablecer el placeholder
-function clearSearchInput() {
-  searchInput.value = "";
-  searchInput.placeholder = "Buscar hechizo...";
 }
 
 // Función para actualizar la lista de autocompletado
@@ -577,8 +566,6 @@ function updateAutocompleteList(matchingSpells) {
       autocompleteList.innerHTML = "";
       // Oculta el teclado móvil después de seleccionar un hechizo
       searchInput.blur();
-      // Limpia el campo de búsqueda y restablece el placeholder
-      clearSearchInput();
     }
 
     listItem.addEventListener("click", handleItemClick);
