@@ -1,7 +1,7 @@
 const CACHE_NAME = "buscador-de-hechizos-cache-v1";
 const urlsToCache = [
   "/", // La página de inicio
-  "/index.html",
+  "/buscador.html",
   "/style/sass.css/",
   "/javascript/script.js",
   "/javascript/spells.js",
