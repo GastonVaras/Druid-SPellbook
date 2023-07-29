@@ -554,15 +554,16 @@ function updateAutocompleteList(matchingSpells) {
       currentSpellIndex = matchingSpells.indexOf(spell);
       // Al hacer clic en un elemento de la lista de autocompletado, establece el valor del campo de búsqueda y muestra el hechizo
       searchInput.value = spell.name;
-      displaySpell(spell);
       searchInput.value = 'Buscar hechizo...';
       searchInput.blur();
+      displaySpell(spell);
     }
 
     listItem.addEventListener("click", handleItemClick);
     listItem.addEventListener("touchend", handleItemClick); // Agregar el evento táctil
 
     autocompleteList.appendChild(listItem);
+    
   });
 }
 
@@ -571,5 +572,6 @@ function displaySpell(spell) {
   currentSpellIndex = spells.indexOf(spell);
   const spellsContainer = document.querySelector("#spells-container");
   spellsContainer.innerHTML = ""; // Borra el contenido existente del contenedor
+  autocompleteList.innerHTML = "";
   createFullSpellCard(spell, spellsContainer); // Muestra el hechizo buscado en el contenedor
 }
