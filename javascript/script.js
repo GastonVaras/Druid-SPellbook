@@ -548,25 +548,21 @@ function updateAutocompleteList(matchingSpells) {
   matchingSpells.forEach(spell => {
     const listItem = document.createElement("li");
     listItem.textContent = spell.name;
-    listItem.addEventListener("click", () => {
+    
+    // Define una función para manejar tanto el evento de clic como el evento táctil
+    function handleItemClick() {
       currentSpellIndex = matchingSpells.indexOf(spell);
       // Al hacer clic en un elemento de la lista de autocompletado, establece el valor del campo de búsqueda y muestra el hechizo
       searchInput.value = spell.name;
       displaySpell(spell);
       // Borra la lista de autocompletado
       autocompleteList.innerHTML = "";
-    });
-    autocompleteList.appendChild(listItem);
-  });
-
-  // Agrega un evento de clic en cualquier lugar fuera del campo de búsqueda para borrar la lista de autocompletado y restablecer el campo al placeholder
-  document.addEventListener("click", (event) => {
-    const target = event.target;
-    if (!target.closest("#autocomplete-list") && !target.closest("#search-input")) {
-      autocompleteList.innerHTML = "";
-      searchInput.value = "";
-      searchInput.placeholder = "Buscar hechizo...";
     }
+
+    listItem.addEventListener("click", handleItemClick);
+    listItem.addEventListener("touchend", handleItemClick); // Agregar el evento táctil
+
+    autocompleteList.appendChild(listItem);
   });
 }
 
