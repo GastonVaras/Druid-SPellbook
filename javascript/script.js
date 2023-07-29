@@ -555,6 +555,8 @@ function updateAutocompleteList(matchingSpells) {
       // Al hacer clic en un elemento de la lista de autocompletado, establece el valor del campo de búsqueda y muestra el hechizo
       searchInput.value = spell.name;
       displaySpell(spell);
+      searchInput.value = 'Buscar hechizo...';
+      searchInput.blur();
     }
 
     listItem.addEventListener("click", handleItemClick);
@@ -570,7 +572,4 @@ function displaySpell(spell) {
   const spellsContainer = document.querySelector("#spells-container");
   spellsContainer.innerHTML = ""; // Borra el contenido existente del contenedor
   createFullSpellCard(spell, spellsContainer); // Muestra el hechizo buscado en el contenedor
-  // Borra la lista de autocompletado
-  autocompleteList.innerHTML = "";
-  autocompleteList.blur();
 }
