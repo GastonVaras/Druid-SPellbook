@@ -574,5 +574,4 @@ function displaySpell(spell) {
   
   createFullSpellCard(spell, spellsContainer); // Muestra el hechizo buscado en el contenedor
   autocompleteList.innerHTML = "";
-  searchInput.blur();
 }
