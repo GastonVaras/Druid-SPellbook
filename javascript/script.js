@@ -555,7 +555,7 @@ function updateAutocompleteList(matchingSpells) {
       // Al hacer clic en un elemento de la lista de autocompletado, establece el valor del campo de búsqueda y muestra el hechizo
       searchInput.value = spell.name;
       searchInput.value = '';
-      searchInput.blur();
+      // searchInput.blur();
       displaySpell(spell);
     }
 
@@ -563,7 +563,7 @@ function updateAutocompleteList(matchingSpells) {
     listItem.addEventListener("touchend", handleItemClick); // Agregar el evento táctil
 
     autocompleteList.appendChild(listItem);
-    searchInput.blur();
+    // searchInput.blur();
   });
 }
 
