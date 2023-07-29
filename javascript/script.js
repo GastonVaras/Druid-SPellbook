@@ -527,6 +527,13 @@ const autocompleteList = document.querySelector("#autocomplete-list");
 // Registra un evento de entrada en el campo de búsqueda
 searchInput.addEventListener("input", handleSearchInput);
 
+// Registra un evento táctil para cerrar la lista de autocompletado cuando se toque en cualquier lugar
+document.addEventListener("touchend", (event) => {
+  if (!event.target.closest("#autocomplete-list")) {
+    autocompleteList.innerHTML = "";
+  }
+});
+
 // Función para manejar la entrada en el campo de búsqueda
 function handleSearchInput() {
   const searchTerm = searchInput.value.toLowerCase();
@@ -537,6 +544,17 @@ function handleSearchInput() {
   currentSpellIndex = 0;
   // Actualiza la lista de autocompletado
   updateAutocompleteList(matchingSpells);
+
+  // Borra el campo de búsqueda si no hay coincidencias en la lista
+  if (matchingSpells.length === 0) {
+    clearSearchInput();
+  }
+}
+
+// Función para limpiar el campo de búsqueda y restablecer el placeholder
+function clearSearchInput() {
+  searchInput.value = "";
+  searchInput.placeholder = "Buscar hechizo...";
 }
 
 // Función para actualizar la lista de autocompletado
@@ -557,6 +575,10 @@ function updateAutocompleteList(matchingSpells) {
       displaySpell(spell);
       // Borra la lista de autocompletado
       autocompleteList.innerHTML = "";
+      // Oculta el teclado móvil después de seleccionar un hechizo
+      searchInput.blur();
+      // Limpia el campo de búsqueda y restablece el placeholder
+      clearSearchInput();
     }
 
     listItem.addEventListener("click", handleItemClick);
