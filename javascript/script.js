@@ -548,7 +548,7 @@ function updateAutocompleteList(matchingSpells) {
   matchingSpells.forEach(spell => {
     const listItem = document.createElement("li");
     listItem.textContent = spell.name;
-    
+
     // Define una función para manejar tanto el evento de clic como el evento táctil
     function handleItemClick() {
       currentSpellIndex = matchingSpells.indexOf(spell);
@@ -561,7 +561,9 @@ function updateAutocompleteList(matchingSpells) {
 
     listItem.addEventListener("click", handleItemClick);
     listItem.addEventListener("touchend", handleItemClick); // Agregar el evento táctil
-
+    // Borra la lista de autocompletado
+    autocompleteList.innerHTML = "";
+    autocompleteList.blur();
     autocompleteList.appendChild(listItem);
   });
 }
