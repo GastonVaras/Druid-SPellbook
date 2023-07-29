@@ -563,7 +563,6 @@ function updateAutocompleteList(matchingSpells) {
     listItem.addEventListener("touchend", handleItemClick); // Agregar el evento táctil
 
     autocompleteList.appendChild(listItem);
-    searchInput.blur();
   });
 }
 
@@ -575,4 +574,5 @@ function displaySpell(spell) {
   
   createFullSpellCard(spell, spellsContainer); // Muestra el hechizo buscado en el contenedor
   autocompleteList.innerHTML = "";
+  searchInput.blur();
 }
