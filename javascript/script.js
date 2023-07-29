@@ -572,6 +572,7 @@ function displaySpell(spell) {
   currentSpellIndex = spells.indexOf(spell);
   const spellsContainer = document.querySelector("#spells-container");
   spellsContainer.innerHTML = ""; // Borra el contenido existente del contenedor
-  // autocompleteList.innerHTML = "";
+  
   createFullSpellCard(spell, spellsContainer); // Muestra el hechizo buscado en el contenedor
+  autocompleteList.innerHTML = "";
 }
