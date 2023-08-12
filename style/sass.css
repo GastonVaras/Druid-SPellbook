@@ -381,6 +381,52 @@ h1 {
 }
 #spells-container .spell-card .spell-main .prepared-spell {
   background-color: rgb(152, 90, 124);
+  position: absolute;
+}
+#spells-container .spell-card .spell-main .prepared-button-container {
+  position: absolute;
+  top: 5px;
+  right: 120px;
+  width: 25px;
+  height: 100px;
+}
+#spells-container .spell-card .spell-main .prepared-button-container span {
+  height: 20px;
+  position: absolute;
+  left: 10px;
+  top: 40px;
+  font-size: 24px;
+  font-weight: bolder;
+}
+#spells-container .spell-card .spell-main .prepared-button-container .increment-button {
+  height: 10px;
+  position: absolute;
+  left: 30px;
+  top: -17px;
+  font-size: 40px;
+  font-weight: bolder;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+#spells-container .spell-card .spell-main .prepared-button-container .decrement-button {
+  height: 10px;
+  position: absolute;
+  left: -30px;
+  top: -20px;
+  font-size: 40px;
+  font-weight: bolder;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+#spells-container .back-button {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 3px;
+  top: -3px;
+  z-index: 25;
 }
 
 #book-container #spells-container .spell-card.change-view-spell {

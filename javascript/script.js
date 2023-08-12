@@ -17,24 +17,24 @@ let showFavorite = false;
 let showAll = true;
 
 
-// Funciónes para crear el elemento de botón preparado y favorito
-function createPreparedButton(spell) {
-  const preparedButton = document.createElement("button");
-  preparedButton.classList.add("prepared-spells", "main-buttons");
-  preparedButton.innerHTML = '<img src="../images/prepared-icon.png" alt="Mano con hechizo">';
-  // Agregar o quitar la clase "prepared-spell" según el estado almacenado
-  if (spell.prepared) {
-    preparedButton.classList.add("prepared-spell");
-  }
-  preparedButton.addEventListener("click", () => {
-    preparedButton.classList.toggle("prepared-spell");
-    const isPrepared = preparedButton.classList.contains("prepared-spell");
-    spell.prepared = isPrepared;
-    // Guardar el estado de 'prepared' en el localStorage
-    localStorage.setItem(spell.name, isPrepared);
-  });
-  return preparedButton;
-}
+// // Funciónes para crear el elemento de botón preparado y favorito
+// function createPreparedButton(spell) {
+//   const preparedButton = document.createElement("button");
+//   preparedButton.classList.add("prepared-spells", "main-buttons");
+//   preparedButton.innerHTML = '<img src="../images/prepared-icon.png" alt="Mano con hechizo">';
+//   // Agregar o quitar la clase "prepared-spell" según el estado almacenado
+//   if (spell.prepared) {
+//     preparedButton.classList.add("prepared-spell");
+//   }
+//   preparedButton.addEventListener("click", () => {
+//     preparedButton.classList.toggle("prepared-spell");
+//     const isPrepared = preparedButton.classList.contains("prepared-spell");
+//     spell.prepared = isPrepared;
+//     // Guardar el estado de 'prepared' en el localStorage
+//     localStorage.setItem(spell.name, isPrepared);
+//   });
+//   return preparedButton;
+// }
 
 function createFavoriteButton(spell) {
   const favoriteButton = document.createElement("button");
@@ -280,6 +280,89 @@ showAllButton.addEventListener("click", () => {
   onlyFavouriteButton.classList.remove("active");
 });
 
+
+// Función para crear el elemento de botón preparado y contador
+function createPreparedButton(spell) {
+  const preparedButtonContainer = document.createElement("div");
+  preparedButtonContainer.classList.add("prepared-button-container");
+
+  const preparedButton = document.createElement("button");
+  preparedButton.classList.add("prepared-spells", "main-buttons");
+  preparedButton.innerHTML = '<img src="../images/prepared-icon.png" alt="Mano con hechizo">';
+
+  // Agregar o quitar la clase "prepared-spell" según el estado almacenado
+  if (spell.prepared) {
+    preparedButton.classList.add("prepared-spell");
+  }
+
+  preparedButton.addEventListener("click", () => {
+    preparedButton.classList.toggle("prepared-spell");
+    const isPrepared = preparedButton.classList.contains("prepared-spell");
+    spell.prepared = isPrepared;
+
+    // Actualizar contador y visibilidad del botón de incremento
+    if (isPrepared) {
+      spell.preparedCount = 1; // Establecer el contador en 1 cuando se prepara
+      counter.style.display = "inline"; // Mostrar el contador
+      incrementButton.style.display = "inline"; // Mostrar el botón de incremento
+    } else {
+      spell.preparedCount = 0; // Reiniciar el contador cuando se desmarca
+      counter.style.display = "none"; // Ocultar el contador
+      incrementButton.style.display = "none"; // Ocultar el botón de incremento
+    }
+
+    // Guardar el estado de 'prepared' en el localStorage
+    localStorage.setItem(spell.name, isPrepared);
+  });
+
+  const counter = document.createElement("span");
+  counter.style.display = spell.prepared ? "inline" : "none";
+  counter.textContent = spell.preparedCount; // Valor inicial del contador
+  preparedButtonContainer.appendChild(counter);
+
+
+  
+  // Botón de incremento
+  const incrementButton = document.createElement("button");
+  incrementButton.classList.add("increment-button");
+  incrementButton.style.display = spell.prepared ? "inline" : "none";
+  incrementButton.textContent = "+";
+  incrementButton.addEventListener("click", () => {
+    spell.preparedCount += 1;
+    counter.textContent = spell.preparedCount;
+    preparedButton.classList.add("prepared-spell");
+    if (spell.preparedCount > 0) {
+      decrementButton.style.display = "inline"; // Mostrar el botón de decremento cuando el contador sea 2 o más
+    }
+  });
+  preparedButtonContainer.appendChild(incrementButton);
+
+  // Botón de decremento
+  const decrementButton = document.createElement("button");
+  decrementButton.classList.add("decrement-button");
+  decrementButton.style.display = spell.prepared && spell.preparedCount > 1 ? "inline" : "none";
+  decrementButton.textContent = "-";
+  decrementButton.addEventListener("click", () => {
+    if (spell.preparedCount > 0) {
+      spell.preparedCount -= 1;
+      counter.textContent = spell.preparedCount;
+      if (spell.preparedCount === 0) {
+        decrementButton.style.display = "none"; // Ocultar el botón de decremento cuando el contador llegue a 0
+        incrementButton.style.display = "none"; // Ocultar el botón de incremento cuando el contador llegue a 0
+        counter.style.display = "none"; // Ocultar el número cuando el contador llegue a 0
+        preparedButton.classList.remove("prepared-spell");
+      } else if (spell.preparedCount === 0) {
+        decrementButton.style.display = "none"; // Ocultar el botón de decremento cuando el contador llegue a 1
+      }
+    }
+  });
+  preparedButtonContainer.appendChild(decrementButton);
+
+  preparedButtonContainer.appendChild(preparedButton);
+
+  return preparedButtonContainer;
+}
+
 // -----> Crear Hechizo <------ \\
 // ---------------------------- \\
 function createMainSpellCard(spell) {
@@ -319,11 +402,11 @@ function createMainSpellCard(spell) {
     }
   });
 
-  // Crea boton de hechizos preparados ------------->
-  const preparedStatus = localStorage.getItem(spell.name) === "true";
-  spell.prepared = preparedStatus; // Agregamos la propiedad 'prepared' al objeto 'spell'
-  const preparedButton = createPreparedButton(spell);
-  spellMain.appendChild(preparedButton);
+
+  
+  // Crea boton de hechizos preparados y contador
+  const preparedButtonContainer = createPreparedButton(spell);
+  spellMain.appendChild(preparedButtonContainer);
 
   // Crea botón de hechizos favoritos
   const favoriteStatus = localStorage.getItem(`favorite_${spell.name}`) === "true";
@@ -506,7 +589,8 @@ function collapseSpellCard(spellCard) {
   }
 }
 
-function createFullSpellCard(spell) {
+// Define la función para crear la tarjeta completa de un hechizo
+function createFullSpellCard(spell, parentContainer) {
   const spellCard = createMainSpellCard(spell);
   expandSpellCard(spellCard, spell);
   spellCard.classList.toggle("change-view-spell");
@@ -565,12 +649,35 @@ function updateAutocompleteList(matchingSpells) {
   });
 }
 
+// Variable para mantener el contenido anterior del contenedor de hechizos
+let previousSpellsContainerContent = "";
+
 // Función para mostrar el hechizo seleccionado
 function displaySpell(spell) {
   currentSpellIndex = spells.indexOf(spell);
   const spellsContainer = document.querySelector("#spells-container");
-  spellsContainer.innerHTML = ""; // Borra el contenido existente del contenedor
+
+  // Almacenamos el contenido actual del contenedor de hechizos
+  previousSpellsContainerContent = spellsContainer.innerHTML;
+
+  // Borramos todo el contenido actual del contenedor de hechizos
+  spellsContainer.innerHTML = "";
   
-  createFullSpellCard(spell, spellsContainer); // Muestra el hechizo buscado en el contenedor
+  // Creamos el botón de vuelta
+  const backButton = document.createElement("button");
+  backButton.textContent = "X";
+  backButton.classList.add("back-button");
+
+  // Agrega el evento de clic al botón para volver a la vista de tarjetas de hechizos
+  backButton.addEventListener("click", function () {
+    // Restauramos el contenido original del contenedor
+    spellsContainer.innerHTML = previousSpellsContainerContent;
+  });
+
+  spellsContainer.appendChild(backButton); // Agrega el botón de vuelta
+
+  // Mostramos solo el hechizo buscado en el contenedor
+  const spellCard = createFullSpellCard(spell, spellsContainer);
   autocompleteList.innerHTML = "";
 }
+
