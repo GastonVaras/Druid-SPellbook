@@ -692,4 +692,9 @@ function displaySpell(spell) {
   // Mostramos solo el hechizo buscado en el contenedor
   const spellCard = createFullSpellCard(spell, spellsContainer);
   autocompleteList.innerHTML = "";
+  // Agregar el evento focusin para mostrar la tarjeta de hechizo buscado
+  spellCard.addEventListener("focusin", () => {
+    spellCard.classList.add("searched-spell");
+  });
+
 }
