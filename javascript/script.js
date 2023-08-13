@@ -16,6 +16,7 @@ let showPrepared = false;
 let showFavorite = false;
 let showAll = true;
 
+let isSearching = false;
 
 // // Funciónes para crear el elemento de botón preparado y favorito
 // function createPreparedButton(spell) {
