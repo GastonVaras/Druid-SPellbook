@@ -487,11 +487,6 @@ function expandSpellCard(spellCard, spell) {
   // Busca el elemento .spell-main dentro del .spell-card
   const spellMain = spellCard.querySelector(".spell-main");
 
-  // Agregar el evento focusin para mostrar la tarjeta de hechizo buscado
-  spellCard.addEventListener("focusin", () => {
-    spellCard.classList.add("searched-spell");
-  });
-
   // Crea el elemento para mostrar los componentes del hechizo
   const spellComponents = document.createElement("p");
   spellComponents.classList.add("spell-components");
