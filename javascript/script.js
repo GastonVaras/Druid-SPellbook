@@ -220,6 +220,17 @@ nextPageButton.addEventListener("click", () => {
 });
 
 
+// Agregar el controlador de eventos para evitar cerrar el buscador al tocar la pantalla en dispositivos móviles
+document.addEventListener("touchstart", (event) => {
+  // Obtener el elemento que se tocó
+  const target = event.target;
+
+  // Verificar si el elemento tocado no es el botón de cerrar o uno de sus elementos hijos
+  if (!target.closest(".close-button")) {
+    event.preventDefault(); // Evitar el comportamiento predeterminado (cierre del buscador)
+  }
+});
+
 // Función para mostrar solo los hechizos preparados
 function showPreparedSpellsHandler() {
   showAll = false;
@@ -306,7 +317,7 @@ function createPreparedButton(spell) {
       counter.style.display = "inline"; // Mostrar el contador
       incrementButton.style.display = "inline"; // Mostrar el botón de incremento
     } else {
-      spell.preparedCount = 0; // Reiniciar el contador cuando se desmarca
+      // spell.preparedCount = 0; // Reiniciar el contador cuando se desmarca
       counter.style.display = "none"; // Ocultar el contador
       incrementButton.style.display = "none"; // Ocultar el botón de incremento
     }
@@ -332,7 +343,7 @@ function createPreparedButton(spell) {
     counter.textContent = spell.preparedCount;
     preparedButton.classList.add("prepared-spell");
     if (spell.preparedCount > 0) {
-      decrementButton.style.display = "inline"; // Mostrar el botón de decremento cuando el contador sea 2 o más
+      decrementButton.style.display = "inline"; // Mostrar el botón de decremento cuando el contador sea 1 o más
     }
   });
   preparedButtonContainer.appendChild(incrementButton);
@@ -346,13 +357,14 @@ function createPreparedButton(spell) {
     if (spell.preparedCount > 0) {
       spell.preparedCount -= 1;
       counter.textContent = spell.preparedCount;
-      if (spell.preparedCount === 0) {
+      if (spell.preparedCount === 1) {
         decrementButton.style.display = "none"; // Ocultar el botón de decremento cuando el contador llegue a 0
         incrementButton.style.display = "none"; // Ocultar el botón de incremento cuando el contador llegue a 0
         counter.style.display = "none"; // Ocultar el número cuando el contador llegue a 0
-        preparedButton.classList.remove("prepared-spell");
+        
       } else if (spell.preparedCount === 0) {
         decrementButton.style.display = "none"; // Ocultar el botón de decremento cuando el contador llegue a 1
+        preparedButton.classList.remove("prepared-spell");
       }
     }
   });
