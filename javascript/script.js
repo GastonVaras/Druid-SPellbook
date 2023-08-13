@@ -220,16 +220,6 @@ nextPageButton.addEventListener("click", () => {
 });
 
 
-// Agregar el controlador de eventos para evitar cerrar el buscador al tocar la pantalla en dispositivos móviles
-document.addEventListener("touchstart", (event) => {
-  // Obtener el elemento que se tocó
-  const target = event.target;
-
-  // Verificar si el elemento tocado no es el botón de cerrar o uno de sus elementos hijos
-  if (!target.closest(".close-button")) {
-    event.preventDefault(); // Evitar el comportamiento predeterminado (cierre del buscador)
-  }
-});
 
 // Función para mostrar solo los hechizos preparados
 function showPreparedSpellsHandler() {
@@ -405,12 +395,22 @@ function createMainSpellCard(spell) {
   const viewButtonSpell = createSpellButton("view-button-spell", "Cambiar vista");
   spellMain.appendChild(viewButtonSpell);
 
-  viewButtonSpell.addEventListener("click", () => {
-    spellCard.classList.toggle("change-view-spell");
-    if (spellCard.classList.contains("change-view-spell")) {
-      expandSpellCard(spellCard, spell);
-    } else {
-      collapseSpellCard(spellCard);
+  viewButtonSpell.addEventListener("click", (event) => {
+    // Evitar el comportamiento predeterminado del botón (cambio de vista)
+    event.preventDefault();
+  
+    // Obtener el contenedor del hechizo actual
+    const spellContainer = event.target.closest(".spell-card");
+    if (spellContainer) {
+      spellContainer.classList.toggle("change-view-spell");
+  
+      if (spellContainer.classList.contains("change-view-spell")) {
+        // Obtener el hechizo asociado
+        const spell = spells.find((s) => s.name === spellContainer.querySelector(".spell-name").textContent);
+        expandSpellCard(spellContainer, spell);
+      } else {
+        collapseSpellCard(spellContainer);
+      }
     }
   });
 
