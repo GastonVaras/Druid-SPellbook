@@ -220,6 +220,7 @@ nextPageButton.addEventListener("click", () => {
 });
 
 
+
 // Función para mostrar solo los hechizos preparados
 function showPreparedSpellsHandler() {
   showAll = false;
@@ -306,7 +307,7 @@ function createPreparedButton(spell) {
       counter.style.display = "inline"; // Mostrar el contador
       incrementButton.style.display = "inline"; // Mostrar el botón de incremento
     } else {
-      spell.preparedCount = 0; // Reiniciar el contador cuando se desmarca
+      // spell.preparedCount = 0; // Reiniciar el contador cuando se desmarca
       counter.style.display = "none"; // Ocultar el contador
       incrementButton.style.display = "none"; // Ocultar el botón de incremento
     }
@@ -332,7 +333,7 @@ function createPreparedButton(spell) {
     counter.textContent = spell.preparedCount;
     preparedButton.classList.add("prepared-spell");
     if (spell.preparedCount > 0) {
-      decrementButton.style.display = "inline"; // Mostrar el botón de decremento cuando el contador sea 2 o más
+      decrementButton.style.display = "inline"; // Mostrar el botón de decremento cuando el contador sea 1 o más
     }
   });
   preparedButtonContainer.appendChild(incrementButton);
@@ -346,13 +347,14 @@ function createPreparedButton(spell) {
     if (spell.preparedCount > 0) {
       spell.preparedCount -= 1;
       counter.textContent = spell.preparedCount;
-      if (spell.preparedCount === 0) {
+      if (spell.preparedCount === 1) {
         decrementButton.style.display = "none"; // Ocultar el botón de decremento cuando el contador llegue a 0
         incrementButton.style.display = "none"; // Ocultar el botón de incremento cuando el contador llegue a 0
         counter.style.display = "none"; // Ocultar el número cuando el contador llegue a 0
-        preparedButton.classList.remove("prepared-spell");
+        
       } else if (spell.preparedCount === 0) {
         decrementButton.style.display = "none"; // Ocultar el botón de decremento cuando el contador llegue a 1
+        preparedButton.classList.remove("prepared-spell");
       }
     }
   });
@@ -393,12 +395,22 @@ function createMainSpellCard(spell) {
   const viewButtonSpell = createSpellButton("view-button-spell", "Cambiar vista");
   spellMain.appendChild(viewButtonSpell);
 
-  viewButtonSpell.addEventListener("click", () => {
-    spellCard.classList.toggle("change-view-spell");
-    if (spellCard.classList.contains("change-view-spell")) {
-      expandSpellCard(spellCard, spell);
-    } else {
-      collapseSpellCard(spellCard);
+  viewButtonSpell.addEventListener("click", (event) => {
+    // Evitar el comportamiento predeterminado del botón (cambio de vista)
+    event.preventDefault();
+  
+    // Obtener el contenedor del hechizo actual
+    const spellContainer = event.target.closest(".spell-card");
+    if (spellContainer) {
+      spellContainer.classList.toggle("change-view-spell");
+  
+      if (spellContainer.classList.contains("change-view-spell")) {
+        // Obtener el hechizo asociado
+        const spell = spells.find((s) => s.name === spellContainer.querySelector(".spell-name").textContent);
+        expandSpellCard(spellContainer, spell);
+      } else {
+        collapseSpellCard(spellContainer);
+      }
     }
   });
 
