@@ -676,7 +676,7 @@ let previousSpellsContainerContent = "";
 
 // Función para mostrar el hechizo seleccionado
 function displaySpell(spell) {
-  
+
   currentSpellIndex = spells.indexOf(spell);
   const spellsContainer = document.querySelector("#spells-container");
 
@@ -703,13 +703,15 @@ function displaySpell(spell) {
   const spellCard = createFullSpellCard(spell, spellsContainer);
   autocompleteList.innerHTML = "";
 
-  
+
   // Establecer isSearching a true cuando muestras un hechizo individual
   isSearching = true;
 
   // Agregar el evento focusin para mostrar la tarjeta de hechizo buscado
   spellCard.addEventListener("focusin", () => {
     spellCard.classList.add("searched-spell");
+    // Aquí quitamos el foco del campo de búsqueda
+    searchInput.blur();
   });
 
   // Restaurar el contenido original del contenedor y establecer isSearching a false cuando haces clic en el botón de vuelta
