@@ -173,6 +173,12 @@ function goToPreviousPage() {
 
 // Función para obtener los hechizos correspondientes a la página actual según el array actual
 function getSpellsForCurrentPage() {
+  if (isSearching) {
+    // Si estamos en modo de búsqueda, mostramos todos los hechizos buscados sin paginación
+    return searchResults;
+  }
+
+  // Si no estamos en modo de búsqueda, aplicamos la paginación según el estado actual
   let filteredSpells = showAll ? spells : showPrepared ? preparedSpells : favoriteSpells;
   let currentPageToShow;
 
@@ -692,9 +698,21 @@ function displaySpell(spell) {
   // Mostramos solo el hechizo buscado en el contenedor
   const spellCard = createFullSpellCard(spell, spellsContainer);
   autocompleteList.innerHTML = "";
+
+  
+  // Establecer isSearching a true cuando muestras un hechizo individual
+  isSearching = true;
+
   // Agregar el evento focusin para mostrar la tarjeta de hechizo buscado
   spellCard.addEventListener("focusin", () => {
     spellCard.classList.add("searched-spell");
+  });
+
+  // Restaurar el contenido original del contenedor y establecer isSearching a false cuando haces clic en el botón de vuelta
+  backButton.addEventListener("click", function () {
+    // Restauramos el contenido original del contenedor
+    spellsContainer.innerHTML = previousSpellsContainerContent;
+    isSearching = false;
   });
 
 }
