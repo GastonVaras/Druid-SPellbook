@@ -18,6 +18,9 @@ let showAll = true;
 
 let isSearching = false;
 
+// Variable para recordar la página actual antes de mostrar un hechizo individual
+let previousPage;
+
 // // Funciónes para crear el elemento de botón preparado y favorito
 // function createPreparedButton(spell) {
 //   const preparedButton = document.createElement("button");
@@ -681,8 +684,8 @@ function displaySpell(spell) {
   currentSpellIndex = spells.indexOf(spell);
   const spellsContainer = document.querySelector("#spells-container");
 
-  // Almacenamos el contenido actual del contenedor de hechizos
-  previousSpellsContainerContent = spellsContainer.innerHTML;
+  // Guarda la página actual antes de mostrar el hechizo individual
+  previousPage = currentPage;
 
   // Borramos todo el contenido actual del contenedor de hechizos
   spellsContainer.innerHTML = "";
@@ -696,6 +699,11 @@ function displaySpell(spell) {
   backButton.addEventListener("click", function () {
     // Restauramos el contenido original del contenedor
     spellsContainer.innerHTML = previousSpellsContainerContent;
+    isSearching = false;
+
+    // Vuelve a la página anterior
+    currentPage = previousPage;
+    updateSpellsToShow();
   });
 
   spellsContainer.appendChild(backButton); // Agrega el botón de vuelta
@@ -709,11 +717,4 @@ function displaySpell(spell) {
 
   // Establecer isSearching a true cuando muestras un hechizo individual
   isSearching = true;
-
-  // Restaurar el contenido original del contenedor y establecer isSearching a false cuando haces clic en el botón de vuelta
-  backButton.addEventListener("click", function () {
-    // Restauramos el contenido original del contenedor
-    spellsContainer.innerHTML = previousSpellsContainerContent;
-    isSearching = false;
-  });
 }
