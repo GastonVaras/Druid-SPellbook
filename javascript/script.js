@@ -322,7 +322,7 @@ function createPreparedButton(spell) {
   preparedButtonContainer.appendChild(counter);
 
 
-  
+
   // Botón de incremento
   const incrementButton = document.createElement("button");
   incrementButton.classList.add("increment-button");
@@ -351,7 +351,7 @@ function createPreparedButton(spell) {
         decrementButton.style.display = "none"; // Ocultar el botón de decremento cuando el contador llegue a 0
         incrementButton.style.display = "none"; // Ocultar el botón de incremento cuando el contador llegue a 0
         counter.style.display = "none"; // Ocultar el número cuando el contador llegue a 0
-        
+
       } else if (spell.preparedCount === 0) {
         decrementButton.style.display = "none"; // Ocultar el botón de decremento cuando el contador llegue a 1
         preparedButton.classList.remove("prepared-spell");
@@ -398,12 +398,12 @@ function createMainSpellCard(spell) {
   viewButtonSpell.addEventListener("click", (event) => {
     // Evitar el comportamiento predeterminado del botón (cambio de vista)
     event.preventDefault();
-  
+
     // Obtener el contenedor del hechizo actual
     const spellContainer = event.target.closest(".spell-card");
     if (spellContainer) {
       spellContainer.classList.toggle("change-view-spell");
-  
+
       if (spellContainer.classList.contains("change-view-spell")) {
         // Obtener el hechizo asociado
         const spell = spells.find((s) => s.name === spellContainer.querySelector(".spell-name").textContent);
@@ -415,7 +415,7 @@ function createMainSpellCard(spell) {
   });
 
 
-  
+
   // Crea boton de hechizos preparados y contador
   const preparedButtonContainer = createPreparedButton(spell);
   spellMain.appendChild(preparedButtonContainer);
@@ -487,11 +487,17 @@ function expandSpellCard(spellCard, spell) {
   // Busca el elemento .spell-main dentro del .spell-card
   const spellMain = spellCard.querySelector(".spell-main");
 
+  // Agregar el evento focusin para mostrar la tarjeta de hechizo buscado
+  spellCard.addEventListener("focusin", () => {
+    spellCard.classList.add("searched-spell");
+  });
+
   // Crea el elemento para mostrar los componentes del hechizo
   const spellComponents = document.createElement("p");
   spellComponents.classList.add("spell-components");
   spellComponents.textContent = `Components: ${spell.components}`;
   spellMain.appendChild(spellComponents);
+
 
   // Verifica si existen componentes materiales y crea el elemento correspondiente
   if (spell.materialComponents) {
@@ -674,7 +680,7 @@ function displaySpell(spell) {
 
   // Borramos todo el contenido actual del contenedor de hechizos
   spellsContainer.innerHTML = "";
-  
+
   // Creamos el botón de vuelta
   const backButton = document.createElement("button");
   backButton.textContent = "X";
@@ -692,4 +698,3 @@ function displaySpell(spell) {
   const spellCard = createFullSpellCard(spell, spellsContainer);
   autocompleteList.innerHTML = "";
 }
-
