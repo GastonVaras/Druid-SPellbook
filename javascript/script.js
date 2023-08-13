@@ -659,7 +659,7 @@ function updateAutocompleteList(matchingSpells) {
       // Al hacer clic en un elemento de la lista de autocompletado, establece el valor del campo de búsqueda y muestra el hechizo
       searchInput.value = spell.name;
       searchInput.value = '';
-      searchInput.blur(); // Cierra el teclado virtual
+      // searchInput.blur(); // Cierra el teclado virtual>
       displaySpell(spell);
     }
 
@@ -675,6 +675,7 @@ let previousSpellsContainerContent = "";
 
 // Función para mostrar el hechizo seleccionado
 function displaySpell(spell) {
+  searchInput.blur(); // Cierra el teclado virtual>
   currentSpellIndex = spells.indexOf(spell);
   const spellsContainer = document.querySelector("#spells-container");
 
