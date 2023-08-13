@@ -653,15 +653,17 @@ function updateAutocompleteList(matchingSpells) {
     const listItem = document.createElement("li");
     listItem.textContent = spell.name;
 
-    // Define una función para manejar tanto el evento de clic como el evento táctil
     function handleItemClick() {
       currentSpellIndex = matchingSpells.indexOf(spell);
       // Al hacer clic en un elemento de la lista de autocompletado, establece el valor del campo de búsqueda y muestra el hechizo
       searchInput.value = spell.name;
       searchInput.value = '';
-      autocompleteList.blur(); // Cierra el teclado virtual>
-      searchInput.blur(); // Cierra el teclado virtual>
-      displaySpell(spell);
+    
+      // Usar setTimeout para desenfocar el campo de búsqueda después de un breve retraso
+      setTimeout(() => {
+        searchInput.blur(); // Cierra el teclado virtual
+        displaySpell(spell);
+      }, 100); // Ajusta el tiempo según sea necesario para que funcione correctamente
     }
 
     // listItem.addEventListener("click", handleItemClick);
@@ -676,7 +678,6 @@ let previousSpellsContainerContent = "";
 
 // Función para mostrar el hechizo seleccionado
 function displaySpell(spell) {
-
   currentSpellIndex = spells.indexOf(spell);
   const spellsContainer = document.querySelector("#spells-container");
 
@@ -699,20 +700,15 @@ function displaySpell(spell) {
 
   spellsContainer.appendChild(backButton); // Agrega el botón de vuelta
 
+  // Quitamos el foco del campo de búsqueda
+  searchInput.blur();
+
   // Mostramos solo el hechizo buscado en el contenedor
   const spellCard = createFullSpellCard(spell, spellsContainer);
   autocompleteList.innerHTML = "";
 
-
   // Establecer isSearching a true cuando muestras un hechizo individual
   isSearching = true;
-
-  // Agregar el evento focusin para mostrar la tarjeta de hechizo buscado
-  spellCard.addEventListener("focusin", () => {
-    spellCard.classList.add("searched-spell");
-    // Aquí quitamos el foco del campo de búsqueda
-    searchInput.blur();
-  });
 
   // Restaurar el contenido original del contenedor y establecer isSearching a false cuando haces clic en el botón de vuelta
   backButton.addEventListener("click", function () {
