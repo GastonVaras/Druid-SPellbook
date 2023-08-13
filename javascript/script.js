@@ -15,51 +15,11 @@ let favoriteTotalPages = 1;
 let showPrepared = false;
 let showFavorite = false;
 let showAll = true;
-
 let isSearching = false;
 
 // Variable para recordar la página actual antes de mostrar un hechizo individual
 let previousPage;
 
-// // Funciónes para crear el elemento de botón preparado y favorito
-// function createPreparedButton(spell) {
-//   const preparedButton = document.createElement("button");
-//   preparedButton.classList.add("prepared-spells", "main-buttons");
-//   preparedButton.innerHTML = '<img src="../images/prepared-icon.png" alt="Mano con hechizo">';
-//   // Agregar o quitar la clase "prepared-spell" según el estado almacenado
-//   if (spell.prepared) {
-//     preparedButton.classList.add("prepared-spell");
-//   }
-//   preparedButton.addEventListener("click", () => {
-//     preparedButton.classList.toggle("prepared-spell");
-//     const isPrepared = preparedButton.classList.contains("prepared-spell");
-//     spell.prepared = isPrepared;
-//     // Guardar el estado de 'prepared' en el localStorage
-//     localStorage.setItem(spell.name, isPrepared);
-//   });
-//   return preparedButton;
-// }
-
-function createFavoriteButton(spell) {
-  const favoriteButton = document.createElement("button");
-  favoriteButton.classList.add("favorite-spells", "main-buttons");
-  favoriteButton.innerHTML = '<img src="../images/favorite-spell-icon.png" alt="Estrella favoritos">';
-
-  if (spell.favorite) {
-    favoriteButton.classList.add("favorite-spell");
-  }
-
-  favoriteButton.addEventListener("click", () => {
-    favoriteButton.classList.toggle("favorite-spell");
-    const isFavorite = favoriteButton.classList.contains("favorite-spell");
-    spell.favorite = isFavorite;
-    localStorage.setItem(`favorite_${spell.name}`, isFavorite); // Utilizamos un prefijo "favorite_" para diferenciar la clave del estado de favorito
-  });
-
-  return favoriteButton;
-}
-
-// ----> Variables Globales <----- \\
 const bookContainer = document.getElementById('book-container')
 const spellsContainer = document.getElementById('spells-container');
 const mainContainer = document.getElementById('main-container');
@@ -84,6 +44,23 @@ const resolutions = [{
 
 // Evalúa el ancho de la pantalla y devuelve la cantidad de hechizos por página correspondiente a la resolución más adecuada. 
 let spellsPerPage = calculateSpellsPerPage();
+
+function loadSpellStateFromLocalStorage() {
+  for (const spell of spells) {
+    const isPrepared = localStorage.getItem(`${spell.name}_prepared`);
+    if (isPrepared !== null) {
+      spell.prepared = isPrepared === "true";
+    }
+
+    const preparedCount = localStorage.getItem(`${spell.name}_prepared_count`);
+    if (preparedCount !== null) {
+      spell.preparedCount = parseInt(preparedCount);
+    }
+  }
+}
+
+// Cargar datos de preparación y contador desde el localStorage al iniciar la página
+loadSpellStateFromLocalStorage();
 
 function calculateSpellsPerPage() {
   const screenWidth = window.innerWidth;
@@ -291,8 +268,28 @@ showAllButton.addEventListener("click", () => {
   onlyFavouriteButton.classList.remove("active");
 });
 
+function createFavoriteButton(spell) {
+  const favoriteButton = document.createElement("button");
+  favoriteButton.classList.add("favorite-spells", "main-buttons");
+  favoriteButton.innerHTML = '<img src="../images/favorite-spell-icon.png" alt="Estrella favoritos">';
 
-// Función para crear el elemento de botón preparado y contador
+  if (spell.favorite) {
+    favoriteButton.classList.add("favorite-spell");
+  }
+
+  favoriteButton.addEventListener("click", () => {
+    favoriteButton.classList.toggle("favorite-spell");
+    const isFavorite = favoriteButton.classList.contains("favorite-spell");
+    spell.favorite = isFavorite;
+
+    // Actualizar el estado de favorito en el localStorage
+    localStorage.setItem(`favorite_${spell.name}`, isFavorite);
+  });
+
+  return favoriteButton;
+}
+
+
 function createPreparedButton(spell) {
   const preparedButtonContainer = document.createElement("div");
   preparedButtonContainer.classList.add("prepared-button-container");
@@ -301,79 +298,96 @@ function createPreparedButton(spell) {
   preparedButton.classList.add("prepared-spells", "main-buttons");
   preparedButton.innerHTML = '<img src="../images/prepared-icon.png" alt="Mano con hechizo">';
 
-  // Agregar o quitar la clase "prepared-spell" según el estado almacenado
-  if (spell.prepared) {
-    preparedButton.classList.add("prepared-spell");
-  }
+  // Obtener el estado de preparado y el valor del contador desde el localStorage
+  const isPrepared = localStorage.getItem(`${spell.name}_prepared`) === "true";
+  const preparedCount = parseInt(localStorage.getItem(`${spell.name}_prepared_count`)) || 0;
 
-  preparedButton.addEventListener("click", () => {
-    preparedButton.classList.toggle("prepared-spell");
-    const isPrepared = preparedButton.classList.contains("prepared-spell");
-    spell.prepared = isPrepared;
+  // Establecer el contador
+  spell.preparedCount = isPrepared ? preparedCount : 0;
 
-    // Actualizar contador y visibilidad del botón de incremento
-    if (isPrepared) {
-      spell.preparedCount = 1; // Establecer el contador en 1 cuando se prepara
-      counter.style.display = "inline"; // Mostrar el contador
-      incrementButton.style.display = "inline"; // Mostrar el botón de incremento
-    } else {
-      // spell.preparedCount = 0; // Reiniciar el contador cuando se desmarca
-      counter.style.display = "none"; // Ocultar el contador
-      incrementButton.style.display = "none"; // Ocultar el botón de incremento
-    }
-
-    // Guardar el estado de 'prepared' en el localStorage
-    localStorage.setItem(spell.name, isPrepared);
-  });
-
+  // Crear el contador
   const counter = document.createElement("span");
-  counter.style.display = spell.prepared ? "inline" : "none";
   counter.textContent = spell.preparedCount; // Valor inicial del contador
   preparedButtonContainer.appendChild(counter);
 
-
-
-  // Botón de incremento
   const incrementButton = document.createElement("button");
   incrementButton.classList.add("increment-button");
-  incrementButton.style.display = spell.prepared ? "inline" : "none";
   incrementButton.textContent = "+";
   incrementButton.addEventListener("click", () => {
-    spell.preparedCount += 1;
-    counter.textContent = spell.preparedCount;
-    preparedButton.classList.add("prepared-spell");
-    if (spell.preparedCount > 0) {
-      decrementButton.style.display = "inline"; // Mostrar el botón de decremento cuando el contador sea 1 o más
-    }
+
+    if (spell.preparedCount === 0) {
+      spell.preparedCount += 1;
+      counter.textContent = spell.preparedCount;
+      spell.prepared = true;
+      preparedButton.classList.add("prepared-spell");
+    } else {
+      spell.preparedCount += 1;
+      counter.textContent = spell.preparedCount;
+    } 
+
+    // Guardar el valor actualizado del contador y el estado de preparado en el localStorage
+    localStorage.setItem(`${spell.name}_prepared`, "true");
+    localStorage.setItem(`${spell.name}_prepared_count`, spell.preparedCount);
   });
   preparedButtonContainer.appendChild(incrementButton);
 
-  // Botón de decremento
   const decrementButton = document.createElement("button");
   decrementButton.classList.add("decrement-button");
-  decrementButton.style.display = spell.prepared && spell.preparedCount > 1 ? "inline" : "none";
   decrementButton.textContent = "-";
   decrementButton.addEventListener("click", () => {
     if (spell.preparedCount > 0) {
       spell.preparedCount -= 1;
       counter.textContent = spell.preparedCount;
-      if (spell.preparedCount === 1) {
-        decrementButton.style.display = "none"; // Ocultar el botón de decremento cuando el contador llegue a 0
-        incrementButton.style.display = "none"; // Ocultar el botón de incremento cuando el contador llegue a 0
-        counter.style.display = "none"; // Ocultar el número cuando el contador llegue a 0
 
-      } else if (spell.preparedCount === 0) {
-        decrementButton.style.display = "none"; // Ocultar el botón de decremento cuando el contador llegue a 1
+      // Guardar el valor actualizado del contador en el localStorage
+      localStorage.setItem(`${spell.name}_prepared_count`, spell.preparedCount);
+
+      if (spell.preparedCount === 0) {
+        spell.prepared = false;
         preparedButton.classList.remove("prepared-spell");
+        localStorage.setItem(`${spell.name}_prepared`, "false");
       }
     }
   });
   preparedButtonContainer.appendChild(decrementButton);
 
+  // Aplicar/quitar la clase "prepared-spell" al botón según el estado de preparación
+  if (spell.prepared) {
+    preparedButton.classList.add("prepared-spell");
+  }
+
+  preparedButton.addEventListener("click", () => {
+    spell.prepared = !spell.prepared;
+    if (spell.prepared) {
+      spell.preparedCount = 1; // Establecer el contador en 1 cuando se prepara
+    } else {
+      spell.preparedCount = 0; // Reiniciar el contador cuando se desmarca
+    }
+
+    // Actualizar el contador en la interfaz
+    counter.textContent = spell.preparedCount;
+
+    // Guardar el estado de preparación y el valor del contador en el localStorage
+    localStorage.setItem(`${spell.name}_prepared`, spell.prepared ? "true" : "false");
+    localStorage.setItem(`${spell.name}_prepared_count`, spell.preparedCount);
+
+    // Aplicar/quitar la clase "prepared-spell" al botón según el estado de preparación
+    if (spell.prepared) {
+      preparedButton.classList.add("prepared-spell");
+    } else {
+      preparedButton.classList.remove("prepared-spell");
+    }
+  });
+
   preparedButtonContainer.appendChild(preparedButton);
 
   return preparedButtonContainer;
 }
+
+
+
+
+
 
 // -----> Crear Hechizo <------ \\
 // ---------------------------- \\
@@ -661,7 +675,7 @@ function updateAutocompleteList(matchingSpells) {
       // Al hacer clic en un elemento de la lista de autocompletado, establece el valor del campo de búsqueda y muestra el hechizo
       searchInput.value = spell.name;
       searchInput.value = '';
-    
+
       // Usar setTimeout para desenfocar el campo de búsqueda después de un breve retraso
       setTimeout(() => {
         searchInput.blur(); // Cierra el teclado virtual
