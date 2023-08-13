@@ -642,7 +642,7 @@ function updateAutocompleteList(matchingSpells) {
       displaySpell(spell);
     }
 
-    listItem.addEventListener("click", handleItemClick);
+    // listItem.addEventListener("click", handleItemClick);
     listItem.addEventListener("touchend", handleItemClick); // Agregar el evento táctil
 
     autocompleteList.appendChild(listItem);
