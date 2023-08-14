@@ -307,6 +307,7 @@ function createPreparedButton(spell) {
 
   // Crear el contador
   const counter = document.createElement("span");
+  counter.classList.add("cantidad");
   counter.textContent = spell.preparedCount; // Valor inicial del contador
   preparedButtonContainer.appendChild(counter);
 
@@ -323,7 +324,7 @@ function createPreparedButton(spell) {
     } else {
       spell.preparedCount += 1;
       counter.textContent = spell.preparedCount;
-    } 
+    }
 
     // Guardar el valor actualizado del contador y el estado de preparado en el localStorage
     localStorage.setItem(`${spell.name}_prepared`, "true");
@@ -354,6 +355,8 @@ function createPreparedButton(spell) {
   // Aplicar/quitar la clase "prepared-spell" al botón según el estado de preparación
   if (spell.prepared) {
     preparedButton.classList.add("prepared-spell");
+  } else {
+    preparedButton.classList.remove("prepared-spell");
   }
 
   preparedButton.addEventListener("click", () => {
@@ -457,7 +460,43 @@ function createMainSpellCard(spell) {
   castButton.addEventListener("click", () => {
     castButton.classList.toggle("casteado");
     mostrarImagenEmergente(spell);
+
+    // Verificar si preparedCount es mayor que 0
+    if (spell.preparedCount > 0) {
+      spell.preparedCount -= 1;
+
+      // Obtener los elementos relacionados con este hechizo
+      const preparedButton = preparedButtonContainer.querySelector('.prepared-spells');
+      const counter = preparedButtonContainer.querySelector('.cantidad');
+
+      // Actualizar el contenido del contador en el DOM
+      if (counter) {
+        counter.textContent = spell.preparedCount;
+      }
+
+      // Si preparedCount llega a 0, quitar la clase "prepared-spell"
+      if (spell.preparedCount === 0) {
+        preparedButton.classList.remove("prepared-spell");
+        // También puedes actualizar el valor de "prepared" a false si es necesario
+        spell.prepared = false;
+      } 
+      // Guardar el valor actualizado del contador en el localStorage
+      localStorage.setItem(`${spell.name}_prepared`, spell.prepared ? "true" : "false");
+      localStorage.setItem(`${spell.name}_prepared_count`, spell.preparedCount);
+    } else {
+                // Crear una ventana de alerta personalizada
+                const customAlert = document.createElement("div");
+                customAlert.classList.add("custom-alert");
+                customAlert.textContent = "Ups! Parece que no tienes este hechizo preparado para lanzar. Quizás ya lo usaste?";
+                document.body.appendChild(customAlert);
+        
+                // Agregar un temporizador para quitar la ventana de alerta después de un tiempo
+                setTimeout(() => {
+                  customAlert.remove();
+                }, 3500);
+    }
   });
+
 
   function createSpellElement(tag, className, text) {
     const element = document.createElement(tag);

@@ -65,3 +65,18 @@
         opacity: 0.65;
     }
 }
+
+/* Estilos para la ventana de alerta personalizada */
+.custom-alert {
+    position: fixed;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    background-color: rgb(84, 55, 11);
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 3px 3px 5px red;
+    z-index: 9999; /* Para asegurarse de que esté por encima de otros elementos */
+  }
